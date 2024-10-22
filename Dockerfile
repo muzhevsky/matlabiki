@@ -8,4 +8,6 @@ RUN apk add --no-cache gcc musl-dev linux-headers
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN mkdir images
+
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "9090"]
