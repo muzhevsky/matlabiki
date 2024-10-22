@@ -28,12 +28,9 @@ class CalculationDrawService:
         X = np.linspace(0, 1, 50)  # Временные значения от 0 до 1
         Y = None
         niter = 100  # Количество итераций для расчетов
-        u = 0
-        ustep = 0.05  # Шаг для переменной 'u'
 
         # Цикл по итерациям для решения дифференциальных уравнений
         for i in range(niter):
-            u += ustep
             Y = odeint(
                 self.__describe_difference_equations,
                 data["start"],
@@ -82,6 +79,10 @@ class CalculationDrawService:
     def save_plot(self, X, Y):
         # Сохранение графика рассчитанных значений
         save_path = "plot.png"
+        # Добавляем легенду
+        plt.legend(loc='upper right')
+        # Устанавливаем плотную компоновку
+        plt.tight_layout()
         plt.rcParams["figure.figsize"] = (15, 8)
         plt.xlabel("Время")  # Подпись оси X
         plt.ylabel("Значение")  # Подпись оси Y
@@ -92,6 +93,10 @@ class CalculationDrawService:
         plt.clf()  # Очистка текущей фигуры
 
     def __draw_petal_plots(self, graph_title: float, stats: list, max_values: list):
+        # Добавляем легенду
+        plt.legend(loc='upper right')
+        # Устанавливаем плотную компоновку
+        plt.tight_layout()
         # Построение лепесткового графика (радариума) для заданных статистик
         variables_list = [Constants.VARIABLES_DESCRIPTION[str(i)]['variable_title'] for i in range(1, 16)]
         labels = np.array(variables_list)
@@ -101,7 +106,7 @@ class CalculationDrawService:
         stats = np.concatenate((stats, [stats[0]]))  # Закрытие петли
         angles = np.concatenate((angles, [angles[0]]))
         labels = np.concatenate((labels, [labels[0]]))
-        max_values = np.concatenate((max_values, [max_values[0]]))  # Закрытие петли для минимальных значений
+        minimals = np.concatenate((max_values, [max_values[0]]))  # Закрытие петли для минимальных значений
 
         # Создание радиального графика
         fig = plt.figure()
@@ -110,8 +115,8 @@ class CalculationDrawService:
         ax.plot(angles, stats, 'o-', linewidth=2)  # Построение статистик
         ax.fill(angles, stats, alpha=0.25)  # Заливка области под линией статистик
 
-        ax.plot(angles, max_values, 'r', linewidth=2)  # Построение минимальных значений
-        ax.fill(angles, max_values, 'r', alpha=0.1)  # Заливка области под линией минимальных значений
+        ax.plot(angles, minimals, 'r', linewidth=2)  # Построение минимальных значений
+        ax.fill(angles, minimals, 'r', alpha=0.1)  # Заливка области под линией минимальных значений
 
         ax.set_thetagrids(angles * 180 / np.pi, labels)  # Установка меток для каждого угла
         ax.set_title("t=" + str(graph_title))  # Заголовок графика
@@ -126,7 +131,7 @@ class CalculationDrawService:
             self.__draw_petal_plots(
                 graph_title=graph_title,
                 stats=Y[i, :],
-                max_values=max_values
+                minimals=max_values
             )
             plt.savefig("images/" + str(i) + "petal_plot.png")  # Сохранение каждого графика
 
