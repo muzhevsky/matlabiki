@@ -80,23 +80,18 @@ class CalculationDrawService:
         # Сохранение графика рассчитанных значений
         save_path = "plot.png"
         # Добавляем легенду
-        plt.legend(loc='upper right')
-        # Устанавливаем плотную компоновку
-        plt.tight_layout()
+
         plt.rcParams["figure.figsize"] = (15, 8)
         plt.xlabel("Время")  # Подпись оси X
         plt.ylabel("Значение")  # Подпись оси Y
         for i in range(0, 15):
             plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'])
-        plt.legend()  # Отображение легенды
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)  # Отображение легенды
+        plt.tight_layout()
         plt.savefig("images/" + save_path)  # Сохранение графика как изображение
         plt.clf()  # Очистка текущей фигуры
 
     def __draw_petal_plots(self, graph_title: float, stats: list, max_values: list):
-        # Добавляем легенду
-        plt.legend(loc='upper right')
-        # Устанавливаем плотную компоновку
-        plt.tight_layout()
         # Построение лепесткового графика (радариума) для заданных статистик
         variables_list = [Constants.VARIABLES_DESCRIPTION[str(i)]['variable_title'] for i in range(1, 16)]
         labels = np.array(variables_list)
