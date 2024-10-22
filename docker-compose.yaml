@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    command: python main.py
+    ports:
+      - "9090:9090"
+    volumes:
+      - .:/app
