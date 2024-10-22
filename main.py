@@ -1,5 +1,5 @@
 import uvicorn
-from flask import Flask, request, me
+from flask import Flask, request
 from calc_and_draw import CalculationDrawService
 
 app = Flask(__name__)
