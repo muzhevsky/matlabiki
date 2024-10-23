@@ -171,7 +171,7 @@ function fillInputsWithValues(){
     inputs = collectInputs();
     console.log(inputs.length)
     for (let i = 0; i < inputs.length; i++){
-        inputs[i].value = (Math.random());
+        inputs[i].value = 0;
     }
 }
 
