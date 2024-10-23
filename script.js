@@ -31,6 +31,11 @@ window.addEventListener("DOMContentLoaded", function(){
 function createFuncBlock(funcNumber) {
     let block = document.createElement("div");
 
+    let header = document.createElement("h2");
+    header.innerText = "Функции";
+    header.classList.add("func-header"); 
+    block.appendChild(header); 
+
     for (let i = 0; i < funcNumber; i++) {
         let funcBlock = document.createElement("div");
         funcBlock.classList.add("func-block");
@@ -166,7 +171,7 @@ function fillInputsWithValues(){
     inputs = collectInputs();
     console.log(inputs.length)
     for (let i = 0; i < inputs.length; i++){
-        inputs[i].value = (Math.random());
+        inputs[i].value = 0;
     }
 }
 
