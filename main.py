@@ -4,7 +4,7 @@ from flask_cors import CORS
 from calc_and_draw import CalculationDrawService
 
 app = Flask(__name__)
-CORS(app, origins="*")
+CORS(app, resources={r"/calcAndDraw": {"origins": "*"}})
 calcS = CalculationDrawService()
 
 
