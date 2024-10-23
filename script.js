@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", function(){
+window.addEventListener("DOMContentLoaded", function () {
     funcBlock = document.getElementById("leftBlock")
     varBlock = document.getElementById("rightBlock")
     varNames = [
@@ -18,14 +18,14 @@ window.addEventListener("DOMContentLoaded", function(){
         "Устойчивость вируса к лекарствам",
         "Степень осложнений заболевания"
     ]
-    
+
     funcBlock.append(createFuncBlock(28))
     varBlock.append(createVarBlock(varNames))
     varBlock.append(createControlBlock())
 
     fillInputsWithValues()
 
-}); 
+});
 
 
 function createFuncBlock(funcNumber) {
@@ -33,8 +33,8 @@ function createFuncBlock(funcNumber) {
 
     let header = document.createElement("h2");
     header.innerText = "Функции";
-    header.classList.add("func-header"); 
-    block.appendChild(header); 
+    header.classList.add("func-header");
+    block.appendChild(header);
 
     for (let i = 0; i < funcNumber; i++) {
         let funcBlock = document.createElement("div");
@@ -150,27 +150,31 @@ function createControlBlock() {
 
 
 
-function postData(data, callback){
-    fetch(new Request("http://194.147.149.181:9090/calcAndDraw", {
+function postData(data, callback) {
+    fetch(new Request("http://localhost:9090/calcAndDraw", {
         method: "POST",
         body: data,
         headers: {
             'Accept': 'application/json, text/plain',
             'Content-Type': 'application/json;charset=UTF-8'
         },
-    })).then(
-        
-    ).catch(function(){
+    })).then(response => {
+        document.querySelectorAll('#imageGallery .plot').forEach((img, index) => {
+            console.log(img.src)
+            img.src += '?t=' + new Date().getTime();
+            console.log(img.src)
+        });
+    }).catch(function () {
 
-    }).finally(function(){
+    }).finally(function () {
         callback()
     })
 }
 
-function fillInputsWithValues(){
+function fillInputsWithValues() {
     inputs = collectInputs();
     console.log(inputs.length)
-    for (let i = 0; i < inputs.length; i++){
+    for (let i = 0; i < inputs.length; i++) {
         inputs[i].value = 0;
     }
 }
@@ -182,7 +186,7 @@ function collectInputs() {
 function collectValues(funcsNumber, varsNumber) {
     let inputs = collectInputs();
     let funcs = new Array(funcsNumber);
-    for (let i = 0; i < funcsNumber; i++){
+    for (let i = 0; i < funcsNumber; i++) {
         funcs[i] = new Array(4)
     }
 
@@ -191,7 +195,7 @@ function collectValues(funcsNumber, varsNumber) {
 
     inputs.forEach(input => {
         let splt = input.id.split('_');
-        switch(splt[0]){
+        switch (splt[0]) {
             case "f":
                 funcs[Number(splt[1])][Number(splt[2])] = Number(input.value)
                 break
