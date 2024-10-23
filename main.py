@@ -1,11 +1,9 @@
 import uvicorn
 from flask import Flask, request
-from flask_cors import CORS, cross_origin
+from flask_cors import cross_origin
 from calc_and_draw import CalculationDrawService
 
 app = Flask(__name__)
-CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 calcS = CalculationDrawService()
 
 
