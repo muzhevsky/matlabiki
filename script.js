@@ -23,13 +23,18 @@ window.addEventListener("DOMContentLoaded", function(){
     varBlock.append(createVarBlock(varNames))
     varBlock.append(createControlBlock())
 
-    fillInputsWithValues()
+    // fillInputsWithValues()
 
 }); 
 
 
 function createFuncBlock(funcNumber) {
     let block = document.createElement("div");
+
+    let header = document.createElement("h2");
+    header.innerText = "Функции";
+    header.classList.add("func-header"); 
+    block.appendChild(header); 
 
     for (let i = 0; i < funcNumber; i++) {
         let funcBlock = document.createElement("div");
