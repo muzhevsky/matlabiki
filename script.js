@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", function(){
     varBlock.append(createVarBlock(varNames))
     varBlock.append(createControlBlock())
 
-    // fillInputsWithValues()
+    fillInputsWithValues()
 
 }); 
 
