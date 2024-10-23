@@ -1,96 +1,172 @@
 window.addEventListener("DOMContentLoaded", function(){
-    body = document.getElementById("body")
-
-    outer = createWrapper('column', '20px')
-
-    block1 = createWrapper('row', '20px')
-    createFuncBlock(block1, 28, 3)
-    block2 = createWrapper('row', '10px')
-    createTestVarBlock(block2, 16)
-
-    outer.append(block1)
-    outer.append(block2)
-
-    body.append(outer)
+    funcBlock = document.getElementById("leftBlock")
+    varBlock = document.getElementById("rightBlock")
+    varNames = [
+        "Летальность",
+        "Численность инфицированных",
+        "Численность населения региона",
+        "Численность госпитализированных",
+        "Изолированность",
+        "Скорость распространения",
+        "Доступность лекарства",
+        "Тяжесть симптомов",
+        "Количество умерших от заболевания",
+        "Уровень медицины",
+        "Длительность инкубационного периода",
+        "Длительность периода полного развития болезни",
+        "Длительность реабилитационного периода",
+        "Устойчивость вируса к лекарствам",
+        "Степень осложнений заболевания"
+    ]
+    
+    funcBlock.append(createFuncBlock(28))
+    varBlock.append(createVarBlock(varNames))
+    varBlock.append(createControlBlock())
 
     fillInputsWithValues()
-    let map = collectValues()
-    console.log(map)
-    const mapAsObject = Array.from(map.entries()).reduce((obj, [key, value]) => {
-        obj[key] = value;
-        return obj;
-    }, {});
-    
-    // Сериализуем объект в JSON
-    const jsonString = JSON.stringify(mapAsObject);
-    console.log(jsonString);
+
 }); 
 
-function createWrapper(direction, gap){
-    let outer = document.createElement("div")
-    outer.style.display = 'flex';
-    outer.style.flexDirection = direction;
-    outer.style.flexWrap = 'wrap';
-    outer.style.gap = gap;
-    outer.style.justifyContent = 'space-between';
-    return outer;
-}
 
-function createFuncBlock(blockToAppend, funcNumber, varsNumber){
-    for (let i = 0; i < funcNumber; i++){
-        let wrapper = document.createElement("div")
+function createFuncBlock(funcNumber) {
+    let block = document.createElement("div");
 
-        let wrapperHeader = document.createElement("div")
-        wrapperHeader.innerText = `F${i+1}`
-        wrapper.append(wrapperHeader)
+    for (let i = 0; i < funcNumber; i++) {
+        let funcBlock = document.createElement("div");
+        funcBlock.classList.add("func-block");
 
-        for (let j = 0; j < varsNumber; j++){
-            wrapper.append(createVarBlock(`f${i}_${j}`,`a${j+1}`))
+        let nameSpan = document.createElement("span");
+        nameSpan.innerText = `F${i + 1} = `;
+        funcBlock.append(nameSpan);
+
+        let vars = ["x³ + ", "x² + ", "x + ", ""];
+        for (let j = 0; j < vars.length; j++) {
+            let input = document.createElement("input");
+            input.type = "number";
+            input.id = `f_${i}_${j}`; // Устанавливаем уникальный id для каждого поля
+            input.classList.add("func-input"); // Добавляем класс для поля ввода
+            funcBlock.append(input);
+
+            let span = document.createElement("span");
+            span.innerText = vars[j];
+            funcBlock.append(span);
         }
-        blockToAppend.append(wrapper)
-    }
-}
 
-function createVarBlock(id, name){
-    let outer = document.createElement("div")
-
-    let header = document.createElement("div")
-    header.innerText = name+":"
-    header.style.display = 'inline-block';
-    outer.append(header)
-
-    let input = document.createElement("input");
-    input.id = id;
-    input.type = 'number';
-    input.style.display = 'inline-block';
-    outer.append(input);
-
-    outer.style.height = '20px';
-
-    return outer
-}
-
-function createTestVarBlock(blockToAppend, varsNumber){
-    let grid = document.createElement('div')
-    grid.style.display = 'grid';
-    grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
-    grid.style.gap = '10px'
-    grid.style.alignContent = 'space-evenly'
-    grid.style.width = '100%';
-    for (let i = 1; i < varsNumber+1; i++){
-        let wrapper = createWrapper()
-        wrapper.append(createVarBlock(`L${i}_0`,`L${i}`))
-        grid.append(wrapper)
+        block.append(funcBlock);
     }
 
-    blockToAppend.append(grid);
+    return block;
+}
+
+
+function createVarBlock(names) {
+    // Создаем таблицу
+    let table = document.createElement("table");
+    table.classList.add("var-table");
+
+    // Создаем заголовок таблицы
+    let headerRow = document.createElement("tr");
+
+    let nameHeader = document.createElement("th");
+    nameHeader.innerText = "Имя переменной";
+    headerRow.appendChild(nameHeader);
+
+    let valueHeader = document.createElement("th");
+    valueHeader.innerText = "Значение";
+    headerRow.appendChild(valueHeader);
+
+    let limitHeader = document.createElement("th");
+    limitHeader.innerText = "Лимит";
+    headerRow.appendChild(limitHeader);
+
+    // Добавляем строку заголовков в таблицу
+    table.appendChild(headerRow);
+
+    // Создаем строки для каждой переменной
+    for (let i = 0; i < names.length; i++) {
+        let row = document.createElement("tr");
+
+        // Ячейка для имени переменной
+        let nameCell = document.createElement("td");
+        nameCell.innerText = names[i];
+        row.appendChild(nameCell);
+
+        // Ячейка для ввода значения
+        let valueCell = document.createElement("td");
+        let input = document.createElement("input");
+        input.id = `var_${i}`;
+        input.type = "number";
+        input.classList.add("value-input");
+        valueCell.appendChild(input);
+        row.appendChild(valueCell);
+
+        // Ячейка для ввода лимита
+        let limitCell = document.createElement("td");
+        let limitInput = document.createElement("input");
+        limitInput.id = `limit_${i}`;
+        limitInput.type = "number";
+        limitInput.classList.add("value-input");
+        limitCell.appendChild(limitInput);
+        row.appendChild(limitCell);
+
+        // Добавляем строку в таблицу
+        table.appendChild(row);
+    }
+
+    // Возвращаем таблицу
+    return table;
+}
+
+function createControlBlock() {
+    // Создаем блок управления
+    let controlBlock = document.createElement("div");
+    controlBlock.classList.add("control-block"); // Добавляем класс для стилизации
+
+    // Создаем кнопку
+    let button = document.createElement("button");
+    button.innerText = "Расчитать";
+    button.classList.add("post-button");
+
+    button.onclick = function () {
+        button.disabled = true;
+        let values = collectValues(28, 15);
+        let data = JSON.stringify(values);
+        console.log(data);
+
+        postData(data, function () {
+            button.disabled = false;
+        });
+    };
+
+    // Добавляем кнопку в блок управления
+    controlBlock.appendChild(button);
+    return controlBlock; // Возвращаем блок с кнопкой
+}
+
+
+
+function postData(data, callback){
+    fetch(new Request("http://localhost:9090/calcAndDraw", {
+        method: "POST",
+        body: data,
+        headers: {
+            'Accept': 'application/json, text/plain',
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+    })).then(function(){
+        // todo получить картинки
+    }).catch(function(){
+
+    }).finally(function(){
+        callback()
+    })
 }
 
 function fillInputsWithValues(){
     inputs = collectInputs();
     console.log(inputs.length)
     for (let i = 0; i < inputs.length; i++){
-        inputs[i].value = Math.random() * 100;
+        inputs[i].value = (Math.random());
     }
 }
 
@@ -98,21 +174,34 @@ function collectInputs() {
     return document.querySelectorAll('input[type="number"]');
 }
 
-function collectValues() {
+function collectValues(funcsNumber, varsNumber) {
     let inputs = collectInputs();
-    let valuesMap = new Map();
+    let funcs = new Array(funcsNumber);
+    for (let i = 0; i < funcsNumber; i++){
+        funcs[i] = new Array(4)
+    }
+
+    let vars = new Array(varsNumber)
+    let limits = new Array(varsNumber)
 
     inputs.forEach(input => {
-        let [a, b] = input.id.split('_');
-        let existing = valuesMap.get(a);
-        
-        if (!existing) { 
-            existing = [];
-            valuesMap.set(a, existing)
+        let splt = input.id.split('_');
+        switch(splt[0]){
+            case "f":
+                funcs[Number(splt[1])][Number(splt[2])] = Number(input.value)
+                break
+            case "var":
+                vars[Number(splt[1])] = Number(input.value)
+                break
+            case "limit":
+                limits[Number(splt[1])] = Number(input.value)
+                break
         }
-        
-        existing[b] = input.value, 10;
     });
 
-    return valuesMap;
+    return {
+        coef: funcs,
+        start: vars,
+        max_values: limits
+    };
 }

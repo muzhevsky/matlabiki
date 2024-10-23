@@ -1,0 +1,155 @@
+/* Основные стили для body */
+body {
+    font-family: 'Roboto', sans-serif; /* Устанавливаем шрифт */
+    background-color: #f4f4f4; /* Светлый фон */
+    color: #333; /* Темный цвет текста */
+    margin: 0; /* Убираем отступы */
+    padding: 0; /* Убираем отступы */
+}
+
+/* Стили для header */
+header {
+    width: 100%; /* Занимаем всю ширину */
+    text-align: center; /* Центрируем текст */
+    background-color: #007BFF; /* Цвет фона заголовка */
+    color: white; /* Цвет текста заголовка */
+    padding: 20px 0; /* Отступы сверху и снизу */
+    position: relative; /* Позиционирование для других элементов */
+}
+
+header h1 {
+    font-size: 2em; /* Размер шрифта заголовка */
+    margin: 0; /* Убираем отступы */
+}
+
+/* Контейнер для блоков */
+.container {
+    display: flex; /* Устанавливаем флекс-контейнер */
+    justify-content: space-around; /* Равномерное распределение пространства */
+    padding: 20px; /* Отступы внутри контейнера */
+}
+
+#imageGallery {
+    background-color: #fff; /* Белый фон для блока */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    padding: 20px; /* Внутренние отступы */
+    margin: 20px;
+}
+
+.plot{
+    object-fit: cover;
+}
+
+/* Стили для leftBlock */
+#leftBlock {
+    width: 600px; /* Фиксированная ширина */
+    background-color: #fff; /* Белый фон для блока */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    padding: 20px; /* Внутренние отступы */
+}
+
+/* Стили для rightBlock */
+#rightBlock {
+    flex: 1; /* Позволяет правому блоку занимать оставшееся пространство */
+    background-color: #fff; /* Белый фон для блока */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    padding: 20px; /* Внутренние отступы */
+    margin-left: 20px; /* Отступ слева от правого блока */
+}
+
+/* Стили для таблицы и кнопок */
+table {
+    width: 100%; /* Таблица занимает всю ширину */
+    border-collapse: collapse; /* Убираем отступы между ячейками */
+}
+
+th, td {
+    border: 1px solid #ccc; /* Границы ячеек */
+    padding: 8px; /* Отступы внутри ячеек */
+    text-align: left; /* Выравнивание текста по левому краю */
+}
+
+button {
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    background-color: #007BFF; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем границу */
+    border-radius: 4px; /* Закругленные углы кнопки */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s; /* Анимация при наведении */
+}
+
+button:hover {
+    background-color: #0056b3; /* Цвет кнопки при наведении */
+}
+
+
+
+.func-block {
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 10px; 
+}
+
+.func-input {
+    width: 80px;
+    padding: 4px; 
+    margin: 0 5px; 
+    box-sizing: border-box; 
+}
+
+.var-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.var-table th, .var-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.var-table th {
+    background-color: #f2f2f2;
+}
+
+.value-input {
+    width: 100%;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+/* Стили для блока управления */
+.control-block {
+    width: 100%; /* Занимаем всю ширину */
+    display: flex; /* Используем flex для центрирования */
+    justify-content: center; /* Центрируем содержимое по горизонтали */
+    margin: 20px 0; /* Отступы сверху и снизу */
+}
+
+/* Стили для кнопки */
+.post-button {
+    padding: 15px 30px; /* Увеличиваем отступы внутри кнопки */
+    font-size: 16px; /* Увеличиваем размер шрифта */
+    background-color: #007BFF; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Закругленные углы кнопки */
+    cursor: pointer; /* Указатель при наведении */
+    transition: background-color 0.3s; /* Плавный переход при наведении */
+}
+
+.post-button:hover {
+    background-color: #0056b3; /* Цвет кнопки при наведении */
+}
+
+.post-button:disabled {
+    background-color: #a5d6a7;
+}
+
+.post-button:hover:not(:disabled) {
+    background-color: #45a049;
+}
