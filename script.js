@@ -158,9 +158,9 @@ function postData(data, callback){
             'Accept': 'application/json, text/plain',
             'Content-Type': 'application/json;charset=UTF-8'
         },
-    })).then(function(){
-        // todo получить картинки
-    }).catch(function(){
+    })).then(
+        
+    ).catch(function(){
 
     }).finally(function(){
         callback()
