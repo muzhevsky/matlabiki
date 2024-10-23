@@ -1,3 +1,5 @@
+const funcNumber = 28;
+const varNumber = 15;
 window.addEventListener("DOMContentLoaded", function () {
     funcBlock = document.getElementById("leftBlock")
     varBlock = document.getElementById("rightBlock")
@@ -19,7 +21,7 @@ window.addEventListener("DOMContentLoaded", function () {
         "Степень осложнений заболевания"
     ]
 
-    funcBlock.append(createFuncBlock(28))
+    funcBlock.append(createFuncBlock())
     varBlock.append(createVarBlock(varNames))
     varBlock.append(createControlBlock())
 
@@ -28,7 +30,7 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function createFuncBlock(funcNumber) {
+function createFuncBlock() {
     let block = document.createElement("div");
 
     let header = document.createElement("h2");
@@ -128,30 +130,51 @@ function createControlBlock() {
     controlBlock.classList.add("control-block"); // Добавляем класс для стилизации
 
     // Создаем кнопку
-    let button = document.createElement("button");
-    button.innerText = "Расчитать";
-    button.classList.add("post-button");
+    let calculateButton = document.createElement("button");
+    calculateButton.innerText = "Расчитать";
+    calculateButton.classList.add("post-button");
 
-    button.onclick = function () {
-        button.disabled = true;
-        let values = collectValues(28, 15);
+    calculateButton.onclick = function () {
+        calculateButton.disabled = true;
+        let values = collectValues();
         let data = JSON.stringify(values);
         console.log(data);
 
         postData(data, function () {
-            button.disabled = false;
+            calculateButton.disabled = false;
         });
     };
 
     // Добавляем кнопку в блок управления
-    controlBlock.appendChild(button);
+    controlBlock.appendChild(calculateButton);
+
+    let saveButton = document.createElement("button");
+    saveButton.innerText = "Сохранить";
+    saveButton.classList.add("post-button");
+
+    saveButton.onclick = function () {
+        saveJSONToFile()
+    };
+    controlBlock.appendChild(saveButton);
+
+    // Добавляем кнопку в блок управления
+    controlBlock.appendChild(calculateButton);
+
+    let loadButton = document.createElement("button");
+    loadButton.innerText = "Загрузить";
+    loadButton.classList.add("post-button");
+
+    loadButton.onclick = function () {
+        loadJSONFromFile()
+    };
+    controlBlock.appendChild(loadButton);
     return controlBlock; // Возвращаем блок с кнопкой
 }
 
 
 
 function postData(data, callback) {
-    fetch(new Request("http://194.147.149.181:9090/calcAndDraw", {
+    fetch(new Request("http://localhost:9090/calcAndDraw", {
         method: "POST",
         body: data,
         headers: {
@@ -159,6 +182,9 @@ function postData(data, callback) {
             'Content-Type': 'application/json;charset=UTF-8'
         },
     })).then(response => {
+        if (response.status != 200){
+            return
+        }
         document.querySelectorAll('#imageGallery .plot').forEach((img, index) => {
             console.log(img.src)
             img.src += '?t=' + new Date().getTime();
@@ -183,15 +209,15 @@ function collectInputs() {
     return document.querySelectorAll('input[type="number"]');
 }
 
-function collectValues(funcsNumber, varsNumber) {
+function collectValues() {
     let inputs = collectInputs();
-    let funcs = new Array(funcsNumber);
-    for (let i = 0; i < funcsNumber; i++) {
+    let funcs = new Array(funcNumber);
+    for (let i = 0; i < funcNumber; i++) {
         funcs[i] = new Array(4)
     }
 
-    let vars = new Array(varsNumber)
-    let limits = new Array(varsNumber)
+    let vars = new Array(varNumber)
+    let limits = new Array(varNumber)
 
     inputs.forEach(input => {
         let splt = input.id.split('_');
@@ -214,3 +240,64 @@ function collectValues(funcsNumber, varsNumber) {
         max_values: limits
     };
 }
+
+function saveJSONToFile() {
+            // Преобразуем объект в JSON строку
+            const jsonData = JSON.stringify(collectValues(), null, 2);
+
+            // Создаем Blob и ссылку для скачивания
+            const blob = new Blob([jsonData], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+
+            // Создаем временную ссылку и инициируем скачивание
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "data.json"; // Название файла
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+}
+
+
+function loadFromJsonHelp(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const jsonData = JSON.parse(e.target.result);
+
+        let inputs = collectInputs();
+    
+        inputs.forEach(input => {
+            let splt = input.id.split('_');
+            switch (splt[0]) {
+                case "f":
+                    input.value = jsonData.coef[Number(splt[1])][Number(splt[2])]
+                    break
+                case "var":
+                    input.value = jsonData.start[Number(splt[1])]
+                    break
+                case "limit":
+                    input.value = jsonData.max_values[Number(splt[1])]
+                    break
+            }
+        });
+
+        
+        event.target.remove();
+    };
+
+    reader.readAsText(file);
+}
+
+function loadJSONFromFile() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.onchange = loadFromJsonHelp;
+    fileInput.style.width = 0;
+    document.body.appendChild(fileInput); 
+    fileInput.click();
+};
