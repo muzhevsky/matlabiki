@@ -174,7 +174,7 @@ function createControlBlock() {
 
 
 function postData(data, callback) {
-    fetch(new Request("http://194.147.149.181/:9090/calcAndDraw", {
+    fetch(new Request("http://194.147.149.181:9090/calcAndDraw", {
         method: "POST",
         body: data,
         headers: {
