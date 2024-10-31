@@ -194,7 +194,7 @@ function collectValues(shitMap, funcNumber) {
 
 function saveJSONToFile(map, funcNumber) {
     // Преобразуем объект в JSON строку
-    const jsonData = JSON.stringify(collectValues(map, funcNumber), null, 2);
+    const jsonData = JSON.stringify(Object.fromEntries(collectValues(map, funcNumber)), null, 2);
 
     // Создаем Blob и ссылку для скачивания
     const blob = new Blob([jsonData], { type: "text/plain" });
@@ -224,7 +224,7 @@ function loadFromJsonHelp(event) {
         inputs.forEach(input => {
             let splt = input.id.split('_');
             switch (splt[0]) {
-                case "f":
+                case "f": // как же надоело пытаться делать гибко в JS 
                     input.value = jsonData.coef[Number(splt[1])][Number(splt[2])]
                     break
                 case "var":
@@ -232,6 +232,12 @@ function loadFromJsonHelp(event) {
                     break
                 case "limit":
                     input.value = jsonData.max_values[Number(splt[1])]
+                    break
+                case "k":
+                    input.value = jsonData.k[Number(splt[1])]
+                    break
+                case "b":
+                    input.value = jsonData.b[Number(splt[1])]
                     break
             }
         });

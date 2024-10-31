@@ -20,8 +20,8 @@ window.addEventListener("DOMContentLoaded", function () {
     ]
 
     funcBlock.append(createFuncBlock(funcNumber))
-    varBlock.append(createConstTable(["название переменной", "значение", "лимит"], varNames, ["var_", "limit_"]))
-    varBlock.append(createConstTable(["функция", "k[i]", "b[i]"], ["E1","E2","E3","E4","E5","E6"], ["k_", "b_"]))
+    varBlock.append(createConstTable(["название переменной", "значение", "лимит"], varNames, ["var", "limit"]))
+    varBlock.append(createConstTable(["функция", "k[i]", "b[i]"], ["E1","E2","E3","E4","E5","E6"], ["k", "b"]))
     varBlock.append(createControlBlock("http://194.147.149.181:9090/calcAndDraw_car", shitMap, funcNumber))
 
     fillInputsWithValues()
