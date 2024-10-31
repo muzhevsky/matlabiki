@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     funcBlock.append(createFuncBlock(funcNumber))
     varBlock.append(createConstTable(["название переменной", "значение", "лимит"], varNames, ["var_", "limit_"]))
-    varBlock.append(createControlBlock("http://http://194.147.149.181:8081/calcAndDraw", shitMap, funcNumber))
+    varBlock.append(createControlBlock("http://194.147.149.181:8081/calcAndDraw", shitMap, funcNumber))
 
     fillInputsWithValues()
 });
