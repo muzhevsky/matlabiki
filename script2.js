@@ -1,9 +1,9 @@
 window.addEventListener("DOMContentLoaded", function () {
-    funcBlock = document.getElementById("leftBlock")
-    varBlock = document.getElementById("rightBlock")
-    funcNumber = 28;
-    const shitMap = new Map([["var", "max"], ["limit", "limits"], ["k", "k"], ["v", "v"]]);
-    varNames = [
+    let funcBlock = document.getElementById("leftBlock")
+    let varBlock = document.getElementById("rightBlock")
+    let funcNumber = 76;
+    let shitMap = new Map([["var", "start"], ["limit", "max_values"], ["k", "k"], ["b", "b"]]);
+    let varNames = [
         "Общее количество ДТП в РФ (в год)",
         "Количество погибших в ДТП",
         "Количество раненых в ДТП",
@@ -16,16 +16,12 @@ window.addEventListener("DOMContentLoaded", function () {
         "Количество ДТП с участием детей",
         "Количество ДТП по вине технически неисправных транспортных средств",
         "Количество ДТП из-за неудовлетворительного состояния улиц и дорог",
-        "Количество ДТП с тяжкими последствиями",
-        "Количество ДТП по причине плохих климатических условий",
-        "Количество ДТП по причине стихийных бедствий",
-        "Количество ДТП по причине состояния здоровья водителя",
-        "Количество ДТП по причине отвлекающих водителя факторов"
+        "Количество ДТП с тяжкими последствиями"
     ]
 
     funcBlock.append(createFuncBlock(funcNumber))
     varBlock.append(createConstTable(["название переменной", "значение", "лимит"], varNames, ["var_", "limit_"]))
-    varBlock.append(createConstTable(["функция", "k[i]", "b[i]"], ["E1","E2","E3","E4","E5","E6"], ["k_", "v_"]))
+    varBlock.append(createConstTable(["функция", "k[i]", "b[i]"], ["E1","E2","E3","E4","E5","E6"], ["k_", "b_"]))
     varBlock.append(createControlBlock("http://194.147.149.181:9090/calcAndDraw_car", shitMap, funcNumber))
 
     fillInputsWithValues()

@@ -179,12 +179,13 @@ function collectValues(shitMap, funcNumber) {
 
     inputs.forEach(input => {
         let splt = input.id.split('_');
+        let value = Number(input.value)
         if (splt[0] == "f") {
-            funcs[Number(splt[1])][Number(splt[2])] = Number(input.value)
+            funcs[Number(splt[1])][Number(splt[2])] = value
             return
         }
 
-        result.get(shitMap.get(splt[0])).push(input.value)
+        result.get(shitMap.get(splt[0])).push(value)
     });
 
     result.set('coef', funcs)

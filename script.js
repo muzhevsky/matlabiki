@@ -1,9 +1,9 @@
 window.addEventListener("DOMContentLoaded", function () {
-    funcNumber = 28;
-    const shitMap = new Map([["var", "max"], ["limit", "limits"]])
-    funcBlock = document.getElementById("leftBlock")
-    varBlock = document.getElementById("rightBlock")
-    varNames = [
+    let funcNumber = 28;
+    let shitMap = new Map([["var", "start"], ["limit", "max_values"]])
+    let funcBlock = document.getElementById("leftBlock")
+    let varBlock = document.getElementById("rightBlock")
+    let varNames = [
         "Летальность",
         "Численность инфицированных",
         "Численность населения региона",
