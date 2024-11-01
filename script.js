@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", function () {
     let shitMap = new Map([["var", "start"], ["limit", "max_values"]])
     let funcBlock = document.getElementById("leftBlock")
     let varBlock = document.getElementById("rightBlock")
+    let controlBlock = document.getElementById("controlBlock")
     let varNames = [
         "Летальность",
         "Численность инфицированных",
@@ -22,8 +23,8 @@ window.addEventListener("DOMContentLoaded", function () {
     ]
 
     funcBlock.append(createFuncBlock(funcNumber))
-    varBlock.append(createConstTable(["название переменной", "значение", "лимит"], varNames, ["var_", "limit_"]))
-    varBlock.append(createControlBlock("http://194.147.149.181:9090/calcAndDraw", shitMap, funcNumber))
+    varBlock.append(createConstTable(["название переменной", "значение", "лимит"], varNames, ["var", "limit"]))
+    controlBlock.append(createControlBlock("http://194.147.149.181:9090/calcAndDraw", shitMap, funcNumber))
 
     fillInputsWithValues()
 });

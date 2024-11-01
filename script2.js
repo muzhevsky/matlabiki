@@ -1,6 +1,7 @@
 window.addEventListener("DOMContentLoaded", function () {
     let funcBlock = document.getElementById("leftBlock")
     let varBlock = document.getElementById("rightBlock")
+    let controlBlock = document.getElementById("controlBlock")
     let funcNumber = 76;
     let shitMap = new Map([["var", "start"], ["limit", "max_values"], ["k", "k"], ["b", "b"]]);
     let varNames = [
@@ -22,7 +23,7 @@ window.addEventListener("DOMContentLoaded", function () {
     funcBlock.append(createFuncBlock(funcNumber))
     varBlock.append(createConstTable(["название переменной", "значение", "лимит"], varNames, ["var", "limit"]))
     varBlock.append(createConstTable(["функция", "k[i]", "b[i]"], ["E1","E2","E3","E4","E5","E6"], ["k", "b"]))
-    varBlock.append(createControlBlock("http://194.147.149.181:9090/calcAndDraw_car", shitMap, funcNumber))
+    controlBlock.append(createControlBlock("http://194.147.149.181:9090/calcAndDraw_car", shitMap, funcNumber))
 
     fillInputsWithValues()
 });

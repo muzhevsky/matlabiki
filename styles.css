@@ -9,12 +9,21 @@ body {
 
 /* Стили для header */
 header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     width: 100%; /* Занимаем всю ширину */
     text-align: center; /* Центрируем текст */
     background-color: #007BFF; /* Цвет фона заголовка */
     color: white; /* Цвет текста заголовка */
     padding: 20px 0; /* Отступы сверху и снизу */
     position: relative; /* Позиционирование для других элементов */
+}
+
+header a {
+    font-size: 2em; /* Размер шрифта заголовка */
+    margin: 0; /* Убираем отступы */
+    color: white;
 }
 
 header h1 {
@@ -48,6 +57,8 @@ header h1 {
     border-radius: 8px; /* Закругленные углы */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
     padding: 20px; /* Внутренние отступы */
+    overflow-y: scroll;
+    height: 600px; /* Set a fixed height for the element */
 }
 
 /* Стили для rightBlock */
@@ -58,6 +69,8 @@ header h1 {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
     padding: 20px; /* Внутренние отступы */
     margin-left: 20px; /* Отступ слева от правого блока */
+    overflow-y: scroll;
+    height: 600px; /* Set a fixed height for the element */
 }
 
 /* Стили для таблицы и кнопок */
