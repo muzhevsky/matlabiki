@@ -68,7 +68,7 @@ def calc_and_draw_hdd():
 def calc_and_draw_pc():
     #  Получение данных с фронт энда
     content = request.json
-    X, Y = calcS_car.calculate(content)
+    X, Y = calcS_pc.calculate(content)
     # Отрисовка графиков
     path1, path2 = calcS_pc.save_plots(Y)
 

@@ -1,9 +1,11 @@
+import matplotlib
+
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import odeint
 from polynoms import Polynomial
-import io
-import base64
+
 
 class CalculationDrawServicePC:
     def __init__(self):
@@ -24,7 +26,7 @@ class CalculationDrawServicePC:
 
     def __calculate(self, data: dict) -> tuple:
         # Расчет системы дифференциальных уравнений на заданном интервале
-        X = np.linspace(0, 1, 50)  # Временные значения от 0 до 1
+        X = np.linspace(0, 5, 500)  # Временные значения от 0 до 1
         Y = None
         niter = 100  # Количество итераций для расчетов
 
@@ -71,12 +73,11 @@ class CalculationDrawServicePC:
         # Возвращение вычисленных производных
         return [dL0_dx, dL1_dx, dL2_dx, dL3_dx, dL4_dx, dL5_dx, dL6_dx, dL7_dx]
 
-
     def save_plots(self, Y: list):
         fig1, ax1 = plt.subplots(figsize=(16, 8))
-        time_intervals = np.linspace(0, 100, 300)
+        time_intervals = np.linspace(0, 5, 500)
 
-        P0, P1, P2, P3, P4, P5, P6, P7 = Y
+        P0, P1, P2, P3, P4, P5, P6, P7 = Y.T
 
         # Определяем все линии для удобства
         lines = [
@@ -98,11 +99,7 @@ class CalculationDrawServicePC:
         plt.tight_layout()
 
         # Сохранение первого графика в буфер
-        buf1 = io.BytesIO()
-        fig1.savefig(buf1, format="png")
-        buf1.seek(0)
-        img_str1 = base64.b64encode(buf1.getvalue()).decode("utf-8")
-        plt.close(fig1)
+        plt.savefig("images/" + "petal_plot_pc.png")
 
         # Визуализация увеличенного графика
         fig2, ax2 = plt.subplots(figsize=(16, 8))
@@ -112,7 +109,7 @@ class CalculationDrawServicePC:
         zoomed_solution = Y[:len(zoomed_intervals)]
 
         # Разделение обрезанного решения
-        P0_zoomed, P1_zoomed, P2_zoomed, P3_zoomed, P4_zoomed, P5_zoomed, P6_zoomed, P7_zoomed = zoomed_solution
+        P0_zoomed, P1_zoomed, P2_zoomed, P3_zoomed, P4_zoomed, P5_zoomed, P6_zoomed, P7_zoomed = zoomed_solution.T
 
         # Строим линии для увеличенного графика
         zoomed_lines = [
@@ -134,14 +131,10 @@ class CalculationDrawServicePC:
         plt.tight_layout()
 
         # Сохранение второго графика в буфер
-        buf2 = io.BytesIO()
-        fig2.savefig(buf2, format="png")
-        buf2.seek(0)
-        img_str2 = base64.b64encode(buf2.getvalue()).decode("utf-8")
-        plt.close(fig2)
+        plt.savefig("images/" + "petal_plot_pc_zoom.png")
 
         return {
-            "image1": img_str1,  # Полный график
-            "image2": img_str2  # Увеличенный график
+            "image1": None,  # Полный график
+            "image2": None  # Увеличенный график
         }
         plt.clf()  # Очистка текущей фигуры
