@@ -84,7 +84,7 @@ class CalculationDrawService:
         plt.rcParams["figure.figsize"] = (15, 8)
         plt.xlabel("Время")  # Подпись оси X
         plt.ylabel("Значение")  # Подпись оси Y
-        for i in range(0, 15):
+        for i in range(0, 14):
             plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'])
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)  # Отображение легенды
         plt.tight_layout()
