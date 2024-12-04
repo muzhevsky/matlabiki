@@ -26,9 +26,9 @@ class CalculationDrawServicePC:
 
     def __calculate(self, data: dict) -> tuple:
         # Расчет системы дифференциальных уравнений на заданном интервале
-        X = np.linspace(0, 5, 500)  # Временные значения от 0 до 1
+        X = np.linspace(0, 50, 500)  # Временные значения от 0 до 1
         Y = None
-        niter = 100  # Количество итераций для расчетов
+        niter = 500  # Количество итераций для расчетов
 
         # Цикл по итерациям для решения дифференциальных уравнений
         for i in range(niter):
@@ -54,9 +54,9 @@ class CalculationDrawServicePC:
         mus1, mus2, mus3 = mus
 
         lat1, lat2, lat3 = lat
-        dL0_dx = - (lat1 + lat2 + lat3) * P0_t + mus1 * P1_t + mus2 * P2_t + mus3 + P3_t
+        dL0_dx = - (lat1 + lat2 + lat3) * P0_t + mus1 * P1_t + mus2 * P2_t + mus3 * P3_t
 
-        dL1_dx = lat1 * P0_t - (lat1 + lat2 + mus1) * P1_t + mus2 * P4_t + mus3 * P5_t
+        dL1_dx = lat1 * P0_t - (lat2 + lat3 + mus1) * P1_t + mus2 * P4_t + mus3 * P5_t
 
         dL2_dx = lat2 * P0_t - (lat1 + lat3 + mus2) * P2_t + mus1 * P4_t + mus3 * P6_t
 
@@ -75,7 +75,7 @@ class CalculationDrawServicePC:
 
     def save_plots(self, Y: list):
         fig1, ax1 = plt.subplots(figsize=(16, 8))
-        time_intervals = np.linspace(0, 5, 500)
+        time_intervals = np.linspace(0, 50, 500)
 
         P0, P1, P2, P3, P4, P5, P6, P7 = Y.T
 

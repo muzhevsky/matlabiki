@@ -37,7 +37,7 @@ class CalculationDrawServiceHdd:
                 self.__describe_difference_equations,
                 data["start"],
                 X,
-                (data["k"],)
+                (data["q"],)
             )
             # Нормализация результатов, чтобы они были в пределах [0, 1]
             for normalize_row in range(len(Y)):
