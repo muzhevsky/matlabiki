@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", function () {
     let varBlock = document.getElementById("leftBlock")
     varBlock.style.flexDirection = "column";
-    let controlBlock = document.getElementById("controlBlock")
+    let controlBlock = document.getElementById("controlBlock");
 
     for (let i = 0; i < 3; i++) {
         let id = `mu_${i}`;
@@ -37,9 +37,40 @@ window.addEventListener("DOMContentLoaded", function () {
         varBlock.append(innerBlock)
     }
 
-    let shitMap = new Map([["lat", "lat"], ["mu", "mu"]]);
-    controlBlock.append(createControlBlock("http://194.147.149.181:9090/calcAndDraw_pc", shitMap, funcNumber))
-    // controlBlock.append(createControlBlock("http://localhost:9090/calcAndDraw_pc", shitMap, 0))
+    butt = document.createElement("button")
+    butt.innerText = "Рассчитать"
+
+    butt.onclick = function () {
+        butt.disabled = true;
+        let values = function () {
+            let inputs = [...varBlock.querySelectorAll('input[type="number"]')].sort();
+            let values = {
+                mu: new Array(),
+                lat: new Array()
+            }
+
+            inputs.forEach(input => {
+                splt = input.id.split("_");
+                if (splt[0] == "mu") {
+                    values.mu.push(Number(input.value))
+                } else {
+                    values.lat.push(Number(input.value))
+                }
+            })
+
+            return values;
+        }();
+        console.log(values);
+        let data = JSON.stringify(values);
+        console.log(data);
+
+        postData(formSubmitPath, data, function () {
+            butt.disabled = false;
+        });
+    };
+
+    controlBlock.append(butt);
+
 
     fillInputsWithValues()
 });
