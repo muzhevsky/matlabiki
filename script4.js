@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", function () {
         let row = document.createElement("tr");
 
         let labelCell = document.createElement("td");
-        labelCell.innerText = `Интенсивность починки компьютера ${i + 1}`; // Название поля
+        labelCell.innerText = `Интенсивность потока восстановления компьютера ${i + 1}`; // Название поля
         row.append(labelCell);
 
         let inputCell = document.createElement("td");
@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", function () {
         let row = document.createElement("tr");
 
         let labelCell = document.createElement("td");
-        labelCell.innerText = `Интенсивность отказа компьютера ${i + 1}`; // Название поля
+        labelCell.innerText = `Интенсивность потока отказа компьютера ${i + 1}`; // Название поля
         row.append(labelCell);
 
         let inputCell = document.createElement("td");
