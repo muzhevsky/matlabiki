@@ -42,7 +42,7 @@ function createConstTable(headers, names, idPrefixes) {
     // Создаем заголовок таблицы
     let headerRow = document.createElement("tr");
 
-    for (let i = 0; i < headers.length; i++){
+    for (let i = 0; i < headers.length; i++) {
         let nameHeader = document.createElement("th");
         nameHeader.innerText = headers[i];
         headerRow.appendChild(nameHeader);
@@ -60,7 +60,7 @@ function createConstTable(headers, names, idPrefixes) {
         nameCell.innerText = names[i];
         row.appendChild(nameCell);
 
-        for (let j = 0; j < idPrefixes.length; j++){
+        for (let j = 0; j < idPrefixes.length; j++) {
             let valueCell = document.createElement("td");
             let input = document.createElement("input");
             input.id = `${idPrefixes[j]}_${i}`;
@@ -137,7 +137,7 @@ function postData(path, data, callback) {
             'Content-Type': 'application/json;charset=UTF-8'
         },
     })).then(response => {
-        if (response.status != 200){
+        if (response.status != 200) {
             return
         }
         document.querySelectorAll('#imageGallery .plot').forEach((img, index) => {
@@ -167,8 +167,12 @@ function collectInputs() {
 function collectValues(shitMap, funcNumber) {
     let inputs = collectInputs();
     let funcs = new Array(funcNumber);
+    let qs = new Array(5);
     for (let i = 0; i < funcNumber; i++) {
         funcs[i] = new Array(4)
+    }
+    for (let i = 0; i < qs.length; i++){
+        qs[i] = new Array(4)
     }
 
     var result = new Map()
@@ -184,11 +188,18 @@ function collectValues(shitMap, funcNumber) {
             funcs[Number(splt[1])][Number(splt[2])] = value
             return
         }
+        if (splt[0] == "q"){
+            console.log(splt)
+            qs[Number(splt[2])][Number(splt[1])] = value
+            return
+        }
 
         result.get(shitMap.get(splt[0])).push(value)
     });
 
+
     result.set('coef', funcs)
+    result.set('q', qs)
     return result;
 }
 
@@ -216,11 +227,11 @@ function loadFromJsonHelp(event) {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         const jsonData = JSON.parse(e.target.result);
 
         let inputs = collectInputs();
-    
+
         inputs.forEach(input => {
             let splt = input.id.split('_');
             switch (splt[0]) {
@@ -239,10 +250,13 @@ function loadFromJsonHelp(event) {
                 case "b":
                     input.value = jsonData.b[Number(splt[1])]
                     break
+                case "q":
+                    input.value = jsonData.q[Number(splt[2])][Number(splt[1])]
+                    break
             }
         });
 
-        
+
         event.target.remove();
     };
 
@@ -255,6 +269,6 @@ function loadJSONFromFile() {
     fileInput.accept = '.json';
     fileInput.onchange = loadFromJsonHelp;
     fileInput.style.width = 0;
-    document.body.appendChild(fileInput); 
+    document.body.appendChild(fileInput);
     fileInput.click();
 };
