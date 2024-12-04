@@ -18,8 +18,8 @@ function createFuncBlock(funcNumber) {
         for (let j = 0; j < vars.length; j++) {
             let input = document.createElement("input");
             input.type = "number";
-            input.id = `f_${i}_${j}`; // Устанавливаем уникальный id для каждого поля
-            input.classList.add("func-input"); // Добавляем класс для поля ввода
+            input.id = `f_${i}_${j}`;
+            input.classList.add("func-input");
             funcBlock.append(input);
 
             let span = document.createElement("span");
@@ -76,6 +76,60 @@ function createConstTable(headers, names, idPrefixes) {
 
     // Возвращаем таблицу
     return table;
+}
+
+function NewBlock(tableClass, headers, names, idPrefixes) {
+    // Создаем таблицу
+    let table = document.createElement("table");
+    table.classList.add(tableClass);
+
+    // Создаем заголовок таблицы
+    let headerRow = document.createElement("tr");
+
+    for (let i = 0; i < headers.length; i++) {
+        let nameHeader = document.createElement("th");
+        nameHeader.innerText = headers[i];
+        headerRow.appendChild(nameHeader);
+    }
+
+    // Добавляем строку заголовков в таблицу
+    table.appendChild(headerRow);
+
+    // Создаем строки для каждой переменной
+    for (let i = 0; i < names.length; i++) {
+        let row = document.createElement("tr");
+
+        // Ячейка для имени переменной
+        let nameCell = document.createElement("td");
+        nameCell.innerText = names[i];
+        row.appendChild(nameCell);
+
+        for (let j = 0; j < idPrefixes.length; j++) {
+            let valueCell = document.createElement("td");
+            let input = document.createElement("input");
+            input.id = `${idPrefixes[j]}_${i}`;
+            input.type = "number";
+            input.classList.add("value-input");
+            valueCell.appendChild(input);
+            row.appendChild(valueCell);
+        }
+
+        // Добавляем строку в таблицу
+        table.appendChild(row);
+    }
+
+    getData = function () {
+        let values = [...table.querySelectorAll('input[type="number"]')].sort();
+        for (let i = 0; i < values.length; i++) {
+            console.log(i, values[i].value);
+        }
+    }
+
+    // Возвращаем таблицу
+    return {
+        Block: table,
+        GetDataFunc: getData
+    }
 }
 
 function createControlBlock(formSubmitPath, map, funcNumber) {
@@ -171,7 +225,7 @@ function collectValues(shitMap, funcNumber) {
     for (let i = 0; i < funcNumber; i++) {
         funcs[i] = new Array(4)
     }
-    for (let i = 0; i < qs.length; i++){
+    for (let i = 0; i < qs.length; i++) {
         qs[i] = new Array(4)
     }
 
@@ -188,7 +242,7 @@ function collectValues(shitMap, funcNumber) {
             funcs[Number(splt[1])][Number(splt[2])] = value
             return
         }
-        if (splt[0] == "q"){
+        if (splt[0] == "q") {
             console.log(splt)
             qs[Number(splt[2])][Number(splt[1])] = value
             return
