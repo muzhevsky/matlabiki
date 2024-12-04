@@ -39,6 +39,12 @@ class CalculationDrawService:
                 data["start"],
                 X
             )
+            for normalize_row in range(len(Y)):
+                for normalize_column in range(len(Y[normalize_row])):
+                    if Y[normalize_row][normalize_column] > 1.0:
+                        Y[normalize_row][normalize_column] = 1.0
+                    elif Y[normalize_row][normalize_column] < 0.0:
+                        Y[normalize_row][normalize_column] = 0.0
         return Y, X
 
     def __describe_difference_equations(self, u, t):
@@ -53,27 +59,27 @@ class CalculationDrawService:
         q5 = 0.5 if t <= 0.3 else (0.3 if t <= 0.6 else 0.2)
 
         # Вычисление производных на основе текущего состояния и заданных функций
-        dL1_dx = 1 / 0.5 * (q4 - self.functions[0].calc(L3_t) * (q1 + q2 + q4 + q5))
-        dL2_dx = 1 / 0.7 * (self.functions[1].calc(L1_t) * self.functions[2].calc(L4_t) * self.functions[3].calc(L6_t) -
+        dL1_dx = 1 / 10 * (q4 - self.functions[0].calc(L3_t) * (q1 + q2 + q4 + q5))
+        dL2_dx = 1 / 10 * (self.functions[1].calc(L1_t) * self.functions[2].calc(L4_t) * self.functions[3].calc(L6_t) -
                             self.functions[4].calc(L7_t) * (q1 + q4))
-        dL3_dx = 1 / 0.3 * (
+        dL3_dx = 1 / 10 * (
                 self.functions[5].calc(L6_t) * self.functions[6].calc(L10_t) * self.functions[7].calc(L14_t) * (
                 q2 + q5) - self.functions[8].calc(L5_t))
-        dL4_dx = 1 / 0.5 * (q4 + q5)
-        dL5_dx = 1 / 0.8 * ((q4 + q5) - (self.functions[9].calc(L2_t) * self.functions[10].calc(L6_t)))
-        dL6_dx = 1 / 0.5 * (self.functions[11].calc(L2_t) * q5 - (q1 + q4))
-        dL7_dx = 1 / 0.5 * (self.functions[12].calc(L14_t) * (q2 + q4) - self.functions[13].calc(L2_t) * self.functions[
+        dL4_dx = 1 / 10 * (q4 + q5)
+        dL5_dx = 1 / 10 * ((q4 + q5) - (self.functions[9].calc(L2_t) * self.functions[10].calc(L6_t)))
+        dL6_dx = 1 / 10 * (self.functions[11].calc(L2_t) * q5 - (q1 + q4))
+        dL7_dx = 1 / 10 * (self.functions[12].calc(L14_t) * (q2 + q4) - self.functions[13].calc(L2_t) * self.functions[
             14].calc(L13_t) * self.functions[15].calc(L15_t))
-        dL8_dx = 1 / 0.5 * (self.functions[16].calc(L9_t) * self.functions[17].calc(L13_t) * self.functions[18].calc(
+        dL8_dx = 1 / 10 * (self.functions[16].calc(L9_t) * self.functions[17].calc(L13_t) * self.functions[18].calc(
             L15_t) - q1)
-        dL9_dx = 1 / 0.5 * (self.functions[19].calc(L1_t))
-        dL10_dx = 1 / 0.5 * (self.functions[20].calc(L7_t) * (q1 + q2 + q3 + q4 + q5) - self.functions[21].calc(L4_t) *
+        dL9_dx = 1 / 10 * (self.functions[19].calc(L1_t))
+        dL10_dx = 1 / 10 * (self.functions[20].calc(L7_t) * (q1 + q2 + q3 + q4 + q5) - self.functions[21].calc(L4_t) *
                              self.functions[22].calc(L12_t) * self.functions[23].calc(L13_t))
-        dL11_dx = 1 / 0.6 * q1
-        dL12_dx = 1 / 0.3 * (-(q1 * self.functions[24].calc(L7_t)))
-        dL13_dx = 1 / 0.9 * (- q1)
-        dL14_dx = 1 / 0.5 * (self.functions[25].calc(L8_t) * self.functions[26].calc(L12_t) - q2)
-        dL15_dx = 1 / 0.7 * (self.functions[27].calc(L9_t) - q1)
+        dL11_dx = 1 / 10 * q1
+        dL12_dx = 1 / 10 * (-(q1 * self.functions[24].calc(L7_t)))
+        dL13_dx = 1 / 10 * (- q1)
+        dL14_dx = 1 / 10 * (self.functions[25].calc(L8_t) * self.functions[26].calc(L12_t) - q2)
+        dL15_dx = 1 / 10 * (self.functions[27].calc(L9_t) - q1)
 
         # Возвращение вычисленных производных
         return [dL1_dx, dL2_dx, dL3_dx, dL4_dx, dL5_dx, dL6_dx, dL7_dx, dL8_dx, dL9_dx, dL10_dx, dL11_dx, dL12_dx,
