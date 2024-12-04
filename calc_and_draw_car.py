@@ -63,19 +63,19 @@ class CalculationDrawServiceCar:
         e6 = k[5] * t + b[5]
 
         # Вычисление производных на основе текущего состояния и заданных функций
-        dL1_dx = 1 / 5 * (self.functions[0].calc(L7_t) * self.functions[1].calc(L8_t) * self.functions[2].calc(L9_t) * self.functions[3].calc(L10_t) * self.functions[4].calc(L11_t) * self.functions[5].calc(L12_t) * (e1 + e2 + e4) - (e3 + e4 + e5 + e6))
-        dL2_dx = 1 / 5 * (self.functions[6].calc(L4_t) * self.functions[7].calc(L5_t) * self.functions[8].calc(L8_t) * self.functions[9].calc(L9_t) * self.functions[10].calc(L11_t) * e2 - (e3 + e4 + e5 + e6))
-        dL3_dx = 1 / 5 * (self.functions[11].calc(L6_t) * self.functions[12].calc(L7_t) * self.functions[13].calc(L8_t) * self.functions[14].calc(L9_t) * self.functions[15].calc(L10_t) * self.functions[16].calc(L11_t) * self.functions[17].calc(L12_t) * self.functions[18].calc(L13_t) * (e1 + e2) - (e4 + e6))
-        dL4_dx = 1 / 5 * (self.functions[19].calc(L2_t) * self.functions[20].calc(L5_t) * self.functions[21].calc(L7_t) * self.functions[22].calc(L8_t) * self.functions[23].calc(L9_t) * self.functions[24].calc(L11_t) * e2 - (e3 + e4 + e5 + e6))
-        dL5_dx = 1 / 5 * (self.functions[25].calc(L2_t) * self.functions[26].calc(L4_t) * self.functions[27].calc(L7_t) * self.functions[28].calc(L8_t) * self.functions[29].calc(L11_t) * (e1 + e2) - (e3 + e4 + e5 + e6))
-        dL6_dx = 1 / 5 * (self.functions[30].calc(L3_t) * self.functions[31].calc(L7_t) * self.functions[32].calc(L8_t) * self.functions[33].calc(L9_t) * self.functions[34].calc(L10_t) * self.functions[35].calc(L11_t) * self.functions[36].calc(L13_t) - (e3 + e4 + e6))
-        dL7_dx = 1 / 5 * (self.functions[37].calc(L1_t) * self.functions[38].calc(L8_t) * self.functions[39].calc(L13_t) * (e1 + e6) - self.functions[40].calc(L2_t) * self.functions[41].calc(L5_t) * self.functions[42].calc(L10_t) * (e3 + e4 + e5 + e6))
-        dL8_dx = 1 / 5 * (self.functions[43].calc(L1_t) * self.functions[44].calc(L7_t) * self.functions[45].calc(L9_t) * self.functions[46].calc(L11_t) * self.functions[47].calc(L12_t) * (e1 + e2) - (e4 + e6))
-        dL9_dx = 1 / 5 * (self.functions[48].calc(L1_t) * self.functions[49].calc(L10_t) * self.functions[50].calc(L11_t) * self.functions[51].calc(L12_t) * e1 - self.functions[52].calc(L2_t) * self.functions[53].calc(L3_t))
-        dL10_dx = 1 / 5 * (self.functions[54].calc(L1_t) * self.functions[55].calc(L7_t) * self.functions[56].calc(L8_t) * self.functions[57].calc(L9_t) * self.functions[58].calc(L13_t) * e1 - self.functions[59].calc(L2_t) * self.functions[60].calc(L3_t) * (e3 + e4 + e5 + e6))
-        dL11_dx = 1 / 5 * (self.functions[61].calc(L1_t) * self.functions[62].calc(L8_t) * self.functions[63].calc(L12_t) * e2 - (e2 + e4 + e6))
-        dL12_dx = 1 / 5 * (self.functions[64].calc(L1_t) * self.functions[65].calc(L7_t) * self.functions[66].calc(L8_t) * self.functions[67].calc(L11_t) * e2 - e4)
-        dL13_dx = 1 / 5 * (self.functions[68].calc(L1_t) * self.functions[69].calc(L2_t) * self.functions[70].calc(L3_t) * self.functions[71].calc(L4_t) * self.functions[72].calc(L5_t) * self.functions[73].calc(L6_t) * self.functions[74].calc(L7_t) * self.functions[75].calc(L8_t) * e2 - (e3 + e4 + e5 + e6))
+        dL1_dx = 1 / 15 * (self.functions[0].calc(L7_t) * self.functions[1].calc(L8_t) * self.functions[2].calc(L9_t) * self.functions[3].calc(L10_t) * self.functions[4].calc(L11_t) * self.functions[5].calc(L12_t) * (e1 + e2 + e4) - (e3 + e4 + e5 + e6))
+        dL2_dx = 1 / 15 * (self.functions[6].calc(L4_t) * self.functions[7].calc(L5_t) * self.functions[8].calc(L8_t) * self.functions[9].calc(L9_t) * self.functions[10].calc(L11_t) * e2 - (e3 + e4 + e5 + e6))
+        dL3_dx = 1 / 15 * (self.functions[11].calc(L6_t) * self.functions[12].calc(L7_t) * self.functions[13].calc(L8_t) * self.functions[14].calc(L9_t) * self.functions[15].calc(L10_t) * self.functions[16].calc(L11_t) * self.functions[17].calc(L12_t) * self.functions[18].calc(L13_t) * (e1 + e2) - (e4 + e6))
+        dL4_dx = 1 / 15 * (self.functions[19].calc(L2_t) * self.functions[20].calc(L5_t) * self.functions[21].calc(L7_t) * self.functions[22].calc(L8_t) * self.functions[23].calc(L9_t) * self.functions[24].calc(L11_t) * e2 - (e3 + e4 + e5 + e6))
+        dL5_dx = 1 / 15 * (self.functions[25].calc(L2_t) * self.functions[26].calc(L4_t) * self.functions[27].calc(L7_t) * self.functions[28].calc(L8_t) * self.functions[29].calc(L11_t) * (e1 + e2) - (e3 + e4 + e5 + e6))
+        dL6_dx = 1 / 15 * (self.functions[30].calc(L3_t) * self.functions[31].calc(L7_t) * self.functions[32].calc(L8_t) * self.functions[33].calc(L9_t) * self.functions[34].calc(L10_t) * self.functions[35].calc(L11_t) * self.functions[36].calc(L13_t) - (e3 + e4 + e6))
+        dL7_dx = 1 / 15 * (self.functions[37].calc(L1_t) * self.functions[38].calc(L8_t) * self.functions[39].calc(L13_t) * (e1 + e6) - self.functions[40].calc(L2_t) * self.functions[41].calc(L5_t) * self.functions[42].calc(L10_t) * (e3 + e4 + e5 + e6))
+        dL8_dx = 1 / 15 * (self.functions[43].calc(L1_t) * self.functions[44].calc(L7_t) * self.functions[45].calc(L9_t) * self.functions[46].calc(L11_t) * self.functions[47].calc(L12_t) * (e1 + e2) - (e4 + e6))
+        dL9_dx = 1 / 15 * (self.functions[48].calc(L1_t) * self.functions[49].calc(L10_t) * self.functions[50].calc(L11_t) * self.functions[51].calc(L12_t) * e1 - self.functions[52].calc(L2_t) * self.functions[53].calc(L3_t))
+        dL10_dx = 1 / 15 * (self.functions[54].calc(L1_t) * self.functions[55].calc(L7_t) * self.functions[56].calc(L8_t) * self.functions[57].calc(L9_t) * self.functions[58].calc(L13_t) * e1 - self.functions[59].calc(L2_t) * self.functions[60].calc(L3_t) * (e3 + e4 + e5 + e6))
+        dL11_dx = 1 / 15 * (self.functions[61].calc(L1_t) * self.functions[62].calc(L8_t) * self.functions[63].calc(L12_t) * e2 - (e2 + e4 + e6))
+        dL12_dx = 1 / 15 * (self.functions[64].calc(L1_t) * self.functions[65].calc(L7_t) * self.functions[66].calc(L8_t) * self.functions[67].calc(L11_t) * e2 - e4)
+        dL13_dx = 1 / 15 * (self.functions[68].calc(L1_t) * self.functions[69].calc(L2_t) * self.functions[70].calc(L3_t) * self.functions[71].calc(L4_t) * self.functions[72].calc(L5_t) * self.functions[73].calc(L6_t) * self.functions[74].calc(L7_t) * self.functions[75].calc(L8_t) * e2 - (e3 + e4 + e5 + e6))
 
         # Возвращение вычисленных производных
         return [dL1_dx, dL2_dx, dL3_dx, dL4_dx, dL5_dx, dL6_dx, dL7_dx, dL8_dx, dL9_dx, dL10_dx, dL11_dx, dL12_dx,
