@@ -1,44 +1,60 @@
 window.addEventListener("DOMContentLoaded", function () {
-    let varBlock = document.getElementById("leftBlock")
-    varBlock.style.flexDirection = "column";
+    let varBlock = document.getElementById("leftBlock");
     let controlBlock = document.getElementById("controlBlock");
+    controlBlock.style.flexDirection = "column";
+    varBlock = controlBlock;
 
+    // Создаем таблицу
+    let table = document.createElement("table");
+    table.classList.add("input-table"); // Добавляем класс для стилизации
+
+    // Генерация строк для mu
     for (let i = 0; i < 3; i++) {
         let id = `mu_${i}`;
-        let innerBlock = document.createElement("div");
+        let row = document.createElement("tr");
 
-        let span = document.createElement("span");
-        span.innerText = id
-        innerBlock.append(span);
+        let labelCell = document.createElement("td");
+        labelCell.innerText = `Интенсивность починки компьютера ${i + 1}`; // Название поля
+        row.append(labelCell);
 
+        let inputCell = document.createElement("td");
         let input = document.createElement("input");
         input.type = "number";
         input.id = id;
         input.classList.add("func-input");
-        innerBlock.append(input);
+        inputCell.append(input);
+        row.append(inputCell);
 
-        varBlock.append(innerBlock)
+        table.append(row); // Добавляем строку в таблицу
     }
 
+    // Генерация строк для lat
     for (let i = 0; i < 3; i++) {
         let id = `lat_${i}`;
-        let innerBlock = document.createElement("div");
+        let row = document.createElement("tr");
 
-        let span = document.createElement("span");
-        span.innerText = id;
-        innerBlock.append(span);
+        let labelCell = document.createElement("td");
+        labelCell.innerText = `Интенсивность отказа компьютера ${i + 1}`; // Название поля
+        row.append(labelCell);
 
+        let inputCell = document.createElement("td");
         let input = document.createElement("input");
         input.type = "number";
         input.id = id;
         input.classList.add("func-input");
-        innerBlock.append(input);
+        inputCell.append(input);
+        row.append(inputCell);
 
-        varBlock.append(innerBlock)
+        table.append(row); // Добавляем строку в таблицу
     }
 
-    butt = document.createElement("button")
-    butt.innerText = "Рассчитать"
+    // Добавляем таблицу в блок
+    varBlock.append(table);
+
+    // Создаем кнопку
+    let butt = document.createElement("button");
+    butt.innerText = "Рассчитать";
+
 
     butt.onclick = function () {
         butt.disabled = true;
@@ -64,7 +80,7 @@ window.addEventListener("DOMContentLoaded", function () {
         let data = JSON.stringify(values);
         console.log(data);
 
-        postData(formSubmitPath, data, function () {
+        postData("http://194.147.149.181:9090/calcAndDraw_pc", data, function () {
             butt.disabled = false;
         });
     };
