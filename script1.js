@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
     let varBlock = createVarBlock();
     let funcBlock = createFuncBlock();
 
-    let jsonData = localStorage.getItem("jsonData1")
+    let jsonData = localStorage.getItem("jsonData")
     if (jsonData) {
         data = convertJsonToData(jsonData)
         varBlock.setData(data)

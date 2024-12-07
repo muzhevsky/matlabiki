@@ -94,11 +94,13 @@ function RowNameWithIndex(name, index) {
     return result
 }
 
-function PolynomicCellName(funcName, index, funcArg, power) {
-    if (power == 0){
-        return document.createElement("span");
-    } 
-    let result = NameWithIndex(funcName, index)
+function PolynomicCellName(funcName, index, funcArg, power, def) {
+    let result = document.createElement("span") 
+    if (power == 0) {
+        result.innerHTML = def ? def : ""
+        return result;
+    }
+    result.append(NameWithIndex(funcName, index))
     result.append(NameWithPower(funcArg, power))
 
     return result;
@@ -116,7 +118,7 @@ function NameWithPower(name, power){
 
     if (power > 0) {
         result.innerHTML = `${name}`;
-    }
+    } 
 
     if (power > 1) {
         result.innerHTML += `<sup>${power}</sup>`
