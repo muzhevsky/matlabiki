@@ -171,6 +171,7 @@ th {
 }
 
 button {
+    font-size: 24px;
     padding: 10px 20px;
     /* Отступы внутри кнопки */
     background-color: #007BFF;

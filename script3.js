@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", function () {
     let saveToJsonButton = document.getElementById("saveJsonButton")
     let loadToJsonButton = document.getElementById("loadJsonButton")
     let postDataButton = document.getElementById("postDataButton")
+    let fillRandomButton = document.getElementById("fillRandomButton")
     let varBlock = createVarBlock();
     let funcBlock = createFuncBlock();
     let qFuncBlock = createQFuncBlock();
@@ -46,6 +47,12 @@ window.addEventListener("DOMContentLoaded", function () {
             },
             () => { },
             () => postDataButton.disabled = false)
+    }
+
+    fillRandomButton.onclick = () => {
+        varBlock.fillRandom()
+        funcBlock.fillRandom()
+        qFuncBlock.fillRandom()
     }
 });
 
