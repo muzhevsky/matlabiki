@@ -1,91 +1,135 @@
 window.addEventListener("DOMContentLoaded", function () {
-    let varBlock = document.getElementById("leftBlock");
-    let controlBlock = document.getElementById("controlBlock");
-    controlBlock.style.flexDirection = "column";
-    varBlock = controlBlock;
+    let container = document.getElementById("main")
+    let saveToJsonButton = document.getElementById("saveJsonButton")
+    let loadToJsonButton = document.getElementById("loadJsonButton")
+    let postDataButton = document.getElementById("postDataButton")
+    let recoveryBlock = createRecoveryBlock();
+    let failureBlock = createFailureBlock();
 
-    // Создаем таблицу
-    let table = document.createElement("table");
-    table.classList.add("input-table"); // Добавляем класс для стилизации
-
-    // Генерация строк для mu
-    for (let i = 0; i < 3; i++) {
-        let id = `mu_${i}`;
-        let row = document.createElement("tr");
-
-        let labelCell = document.createElement("td");
-        labelCell.innerText = `Интенсивность потока восстановления компьютера ${i + 1}`; // Название поля
-        row.append(labelCell);
-
-        let inputCell = document.createElement("td");
-        let input = document.createElement("input");
-        input.type = "number";
-        input.id = id;
-        input.classList.add("func-input");
-        inputCell.append(input);
-        row.append(inputCell);
-
-        table.append(row); // Добавляем строку в таблицу
+    let jsonData = localStorage.getItem("jsonData4")
+    if (jsonData) {
+        data = convertJsonToData(jsonData)
+        recoveryBlock.setData(data)
+        failureBlock.setData(data)
     }
 
-    // Генерация строк для lat
-    for (let i = 0; i < 3; i++) {
-        let id = `lat_${i}`;
-        let row = document.createElement("tr");
+    container.append(recoveryBlock.block);
+    container.append(failureBlock.block);
 
-        let labelCell = document.createElement("td");
-        labelCell.innerText = `Интенсивность потока отказа компьютера ${i + 1}`; // Название поля
-        row.append(labelCell);
-
-        let inputCell = document.createElement("td");
-        let input = document.createElement("input");
-        input.type = "number";
-        input.id = id;
-        input.classList.add("func-input");
-        inputCell.append(input);
-        row.append(inputCell);
-
-        table.append(row); // Добавляем строку в таблицу
+    saveToJsonButton.onclick = () => {
+        saveJSONToFile(convertDataToJson(recoveryBlock, failureBlock))
     }
 
-    // Добавляем таблицу в блок
-    varBlock.append(table);
-
-    // Создаем кнопку
-    let butt = document.createElement("button");
-    butt.innerText = "Рассчитать";
-
-
-    butt.onclick = function () {
-        butt.disabled = true;
-        let values = function () {
-            let inputs = [...varBlock.querySelectorAll('input[type="number"]')].sort();
-            let values = {
-                mu: new Array(),
-                lat: new Array()
-            }
-
-            inputs.forEach(input => {
-                splt = input.id.split("_");
-                if (splt[0] == "mu") {
-                    values.mu.push(Number(input.value))
-                } else {
-                    values.lat.push(Number(input.value))
-                }
+    loadToJsonButton.onclick = () => {
+        loadJSONFromFile()
+            .then((result) => {
+                let data = convertJsonToData(result)
+                recoveryBlock.setData(data)
+                failureBlock.setData(data)
             })
+            .catch((e) => console.log(e))
+    }
 
-            return values;
-        }();
-        let data = JSON.stringify(values);
-
-        postData("http://194.147.149.181:9090/calcAndDraw_pc", data, function () {
-            butt.disabled = false;
-        });
-    };
-
-    controlBlock.append(butt);
-
-
-    fillInputsWithValues()
+    postDataButton.onclick = () => {
+        postDataButton.disabled = true
+        let body = convertDataToJson(recoveryBlock, failureBlock)
+        localStorage.setItem("jsonData4", body)
+        postData("http://localhost:9090/calcAndDraw_pc", body,
+            () => {
+                document.querySelectorAll('#imageGallery .plot').forEach(img => {
+                    img.src += '?t=' + new Date().getTime();
+                });
+            },
+            () => { },
+            () => postDataButton.disabled = false)
+    }
 });
 
+function createRecoveryBlock() {
+    let varNames = [
+        "Компьютер 1",
+        "Компьютер 2",
+        "Компьютер 3",
+    ]
+
+    let rowNameFunc = function (i) {
+        if (i >= varNames.length) {
+            return ""
+        }
+
+        return varNames[i];
+    }
+
+    let cellNameFunc = function (i, j) {
+        if (i >= varNames.length) {
+            return "";
+        }
+
+        return " ";
+    }
+
+    return NewBlock(["Интенсивность потока восстановления", ""], "recovery", rowNameFunc, cellNameFunc)
+}
+
+function createFailureBlock() {
+    let varNames = [
+        "Компьютер 1",
+        "Компьютер 2",
+        "Компьютер 3",
+    ]
+
+    let rowNameFunc = function (i) {
+        if (i >= varNames.length) {
+            return ""
+        }
+
+        return varNames[i];
+    }
+
+    let cellNameFunc = function (i, j) {
+        if (i >= varNames.length) {
+            return "";
+        }
+
+        return " ";
+    }
+
+    return NewBlock(["Интенсивность потока отказа", ""], "failure", rowNameFunc, cellNameFunc)
+}
+
+function convertDataToJson(recoveryBlock, failureBlock) {
+    let result = {
+        mu: new Array(0),
+        lat: new Array(0)
+    }
+
+    var data = recoveryBlock.getData()
+    for (let i = 0; i < data.length; i++) {
+        result.mu.push(data[i][0])
+    }
+
+    var data = failureBlock.getData()
+    for (let i = 0; i < data.length; i++) {
+        result.lat.push(data[i][0])
+    }
+
+    return JSON.stringify(result)
+}
+
+function convertJsonToData(jsonString) {
+    let data = {
+        recovery: new Array(),
+        failure: new Array()
+    }
+
+    let parsedJson = JSON.parse(jsonString)
+    for (let i = 0; i < parsedJson.mu.length; i++) {
+        data.recovery.push([parsedJson.mu[i]])
+    }
+
+    for (let i = 0; i < parsedJson.lat.length; i++) {
+        data.failure.push([parsedJson.lat[i]])
+    }
+
+    return data
+}
