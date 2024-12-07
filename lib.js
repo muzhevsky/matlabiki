@@ -12,11 +12,13 @@ function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
 
     let rowIndex = 0;
     let rowNameSpan = rowNamesFunc(rowIndex);
+    let rows = new Array()
     while (rowNameSpan !== "") {
         let row = document.createElement("tr");
         let nameCell = document.createElement("td");
         nameCell.append(rowNameSpan);
         row.appendChild(nameCell);
+        rows.push(row);
 
         for (let columnIndex = 0; columnIndex < headers.length - 1; columnIndex++) {
             let valueCell = document.createElement("td");
@@ -65,7 +67,7 @@ function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
             inputMap.set(inputs[i].id, inputs[i]);
         }
 
-        let entries = Object.entries(data);
+        let entries = Object.entries(data); // можно сделать оптимальнее, но мне пофиг
         for (let i = 0; i < entries.length; i++) {
             let entry = entries[i];
             let key = entry[0];
@@ -81,10 +83,33 @@ function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
         }
     }
 
+    fillRandom = function () {
+        for (let i = 0; i < rows.length; i++){
+            let inputs = [...rows[i].querySelectorAll('input[type="number"]')];
+            let chance = 0.5
+            let filled = false;
+            for (let j = 0; j < inputs.length; j++){
+                if (Math.random() > chance){
+                    inputs[j].value = randn_bm()
+                    filled = true;
+                } else {
+                    inputs[j].value = 0;
+                }
+            }
+
+            if (!filled){
+                let randInput = Math.ceil(Math.random()*(inputs.length - 1))
+                console.log(randInput)
+                inputs[randInput].value = randn_bm()
+            }
+        }
+    }
+
     return {
         block: table,
         getData: getData,
-        setData: setData
+        setData: setData,
+        fillRandom: fillRandom
     }
 }
 
@@ -187,4 +212,14 @@ function postData(route, body, succsessCallback, errorCallback, callback) {
     }).finally(function () {
         callback()
     })
+}
+
+function randn_bm() {
+    let u = 0, v = 0;
+    while(u === 0) u = Math.random(); 
+    while(v === 0) v = Math.random();
+    let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    num = num / 10.0 + 0.5;
+    if (num > 1 || num < 0) return randn_bm()
+    return num
 }
