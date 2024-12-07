@@ -76,9 +76,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
             return values;
         }();
-        console.log(values);
         let data = JSON.stringify(values);
-        console.log(data);
 
         postData("http://194.147.149.181:9090/calcAndDraw_pc", data, function () {
             butt.disabled = false;
