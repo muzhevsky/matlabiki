@@ -1,30 +1,48 @@
 window.addEventListener("DOMContentLoaded", function () {
-    let controlBlock = document.getElementById("test")
+    let container = document.getElementById("main")
+    let saveToJsonButton = document.getElementById("saveJsonButton")
+    let loadToJsonButton = document.getElementById("loadJsonButton")
+    let postDataButton = document.getElementById("postDataButton")
+    let varBlock = createVarBlock();
+    let funcBlock = createFuncBlock();
 
-    varBlock = createVarBlock();
-    funcBlock = createFuncBlock();
-    controlBlock.append(varBlock.block);
-    controlBlock.append(funcBlock.block);
+    let jsonData = localStorage.getItem("jsonData1")
+    if (jsonData) {
+        data = convertJsonToData(jsonData)
+        varBlock.setData(data)
+        funcBlock.setData(data)
+    }
 
-    // controlBlock.append(createControlBlock("http://194.147.149.181:9090/calcAndDraw", shitMap, funcNumber))
-    // controlBlock.append(createControlBlock("http://localhost:9090/calcAndDraw", shitMap, funcNumber))
-    fillInputsWithValues()
+    container.append(varBlock.block);
+    container.append(funcBlock.block);
 
-    this.setTimeout(() => {
-        let result = {
-            start: new Array(),
-            max_values: new Array()
-        }
+    saveToJsonButton.onclick = () => {
+        saveJSONToFile(convertDataToJson(varBlock, funcBlock))
+    }
 
-        var data = varBlock.getData()
-        for (let i = 0; i < data.length; i++) {
-            result.start.push(data[i][0])
-            result.max_values.push(data[i][1])
-        }
-
+    loadToJsonButton.onclick = () => {
         loadJSONFromFile()
-        // saveJSONToFile(result);
-    }, 5000)
+            .then((result) => {
+                let data = convertJsonToData(result)
+                varBlock.setData(data)
+                funcBlock.setData(data)
+            })
+            .catch((e) => console.log(e))
+    }
+
+    postDataButton.onclick = () => {
+        postDataButton.disabled = true
+        let body = convertDataToJson(varBlock, funcBlock)
+        localStorage.setItem("jsonData1", body)
+        postData("http://localhost:9090/calcAndDraw", body,
+            () => {
+                document.querySelectorAll('#imageGallery .plot').forEach(img => {
+                    img.src += '?t=' + new Date().getTime();
+                });
+            },
+            () => { },
+            () => postDataButton.disabled = false)
+    }
 });
 
 function createVarBlock() {
@@ -62,7 +80,7 @@ function createVarBlock() {
         return " ";
     }
 
-    return NewBlock(["Название переменной", "Значение", "Лимит"], ["var", "limit"], rowNameFunc, cellNameFunc)
+    return NewBlock(["Название переменной", "Значение", "Лимит"], "var", rowNameFunc, cellNameFunc)
 }
 
 function createFuncBlock() {
@@ -81,8 +99,48 @@ function createFuncBlock() {
         if (i >= flArray.length) {
             return "";
         }
-        return PolynomicCellName("L", flArray[i], power - j)
+        return PolynomicCellName("L", flArray[i], "(t)", power - j)
     }
 
-    return NewBlock(["Функции", "", "", "", ""], ["x3", "x2", "x1", "b"], rowNameFunc, cellNameFunc)
+    return NewBlock(["Функции", "", "", "", ""], "x", rowNameFunc, cellNameFunc)
 }
+
+function convertDataToJson(varBlock, funcBlock) {
+    let result = {
+        start: new Array(0),
+        max_values: new Array(0),
+        coef: new Array(0)
+    }
+
+    var data = varBlock.getData()
+    for (let i = 0; i < data.length; i++) {
+        result.start.push(data[i][0])
+        result.max_values.push(data[i][1])
+    }
+
+    data = funcBlock.getData();
+    for (let i = 0; i < data.length; i++) {
+        result.coef[i] = data[i]
+    }
+
+    return JSON.stringify(result)
+}
+
+function convertJsonToData(jsonString) {
+    let data = {
+        var: new Array(),
+        x: new Array()
+    }
+
+    let parsedJson = JSON.parse(jsonString)
+    for (let i = 0; i < parsedJson.start.length; i++) {
+        data.var.push([parsedJson.start[i], parsedJson.max_values[i]])
+    }
+
+    for (let i = 0; i < parsedJson.coef.length; i++) {
+        data.x.push(parsedJson.coef[i])
+    }
+
+    return data
+}
+
