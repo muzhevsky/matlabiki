@@ -1,5 +1,6 @@
 /* Основные стили для body */
 body {
+    font-size: 24px;
     font-family: 'Roboto', sans-serif;
     /* Устанавливаем шрифт */
     background-color: #f4f4f4;
@@ -120,6 +121,7 @@ header h1 {
 
 /* Стили для таблицы */
 table {
+    font-size:24px;
     border-collapse: collapse;
     /* Убираем лишние промежутки между ячейками */
     width: 100%;
@@ -141,11 +143,11 @@ th {
 
 /* Стили для полей ввода */
 input[type="number"] {
-    width: 60px;
+    width: 120px;
     /* Ширина поля ввода */
     padding: 4px;
     /* Внутренние отступы для удобства */
-    font-size: 14px;
+    font-size: 24px;
     /* Размер шрифта */
 }
 
@@ -161,10 +163,11 @@ th {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .central>* {
-    max-width: 600px;
+    max-width: 1200px;
 }
 
 button {
