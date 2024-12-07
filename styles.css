@@ -108,22 +108,53 @@ header h1 {
     /* Set a fixed height for the element */
 }
 
-/* Стили для таблицы и кнопок */
-table {
-    width: 100%;
-    /* Таблица занимает всю ширину */
-    border-collapse: collapse;
-    /* Убираем отступы между ячейками */
+/* Устанавливаем для контейнера строки инлайн-выравнивание */
+.inline-container {
+    display: inline-flex;
+    /* Размещаем элементы (input и span) в ряд */
+    align-items: center;
+    /* Выравниваем элементы по вертикали */
+    gap: 5px;
+    /* Расстояние между input и span */
 }
 
-th,
-td {
+/* Стили для таблицы */
+table {
+    border-collapse: collapse;
+    /* Убираем лишние промежутки между ячейками */
+    width: 100%;
+    /* Таблица будет занимать всю ширину */
+    margin: 10px 0;
+    /* Отступ сверху и снизу */
+}
+
+/* Стили для ячеек таблицы */
+td,
+th {
     border: 1px solid #ccc;
-    /* Границы ячеек */
+    /* Граница для всех ячеек */
     padding: 8px;
-    /* Отступы внутри ячеек */
-    text-align: left;
-    /* Выравнивание текста по левому краю */
+    /* Отступы внутри ячейки */
+    text-align: center;
+    /* Центрирование текста */
+}
+
+/* Стили для полей ввода */
+input[type="number"] {
+    width: 60px;
+    /* Ширина поля ввода */
+    padding: 4px;
+    /* Внутренние отступы для удобства */
+    font-size: 14px;
+    /* Размер шрифта */
+}
+
+/* Стили для заголовков таблицы */
+th {
+    background-color: #f4f4f4;
+    /* Фон заголовков */
+    font-weight: bold;
+    /* Жирный шрифт */
 }
 
 .central {
@@ -132,8 +163,8 @@ td {
     justify-content: center;
 }
 
-.central div {
-    width: 600px;
+.central>* {
+    max-width: 600px;
 }
 
 button {
