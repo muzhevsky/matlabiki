@@ -1,222 +1,137 @@
-function createFuncBlock(funcNumber) {
-    let block = document.createElement("div");
-
-    let header = document.createElement("h2");
-    header.innerText = "Функции";
-    header.classList.add("func-header");
-    block.appendChild(header);
-
-    for (let i = 0; i < funcNumber; i++) {
-        let funcBlock = document.createElement("div");
-        funcBlock.classList.add("func-block");
-
-        let nameSpan = document.createElement("span");
-        nameSpan.innerText = `F${i + 1} = `;
-        funcBlock.append(nameSpan);
-
-        let vars = ["x³ + ", "x² + ", "x + ", ""];
-        for (let j = 0; j < vars.length; j++) {
-            let input = document.createElement("input");
-            input.type = "number";
-            input.id = `f_${i}_${j}`;
-            input.classList.add("func-input");
-            funcBlock.append(input);
-
-            let span = document.createElement("span");
-            span.innerText = vars[j];
-            funcBlock.append(span);
-        }
-
-        block.append(funcBlock);
-    }
-
-    return block;
-}
-
-
-function createConstTable(headers, names, idPrefixes) {
-    // Создаем таблицу
+function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
     let table = document.createElement("table");
-    table.classList.add("var-table");
-
-    // Создаем заголовок таблицы
     let headerRow = document.createElement("tr");
 
     for (let i = 0; i < headers.length; i++) {
         let nameHeader = document.createElement("th");
-        nameHeader.innerText = headers[i];
+        nameHeader.innerHTML = headers[i];
         headerRow.appendChild(nameHeader);
     }
 
-    // Добавляем строку заголовков в таблицу
     table.appendChild(headerRow);
 
-    // Создаем строки для каждой переменной
-    for (let i = 0; i < names.length; i++) {
+    let rowIndex = 0;
+    let rowNameSpan = rowNamesFunc(rowIndex);
+    while (rowNameSpan !== "") {
         let row = document.createElement("tr");
-
-        // Ячейка для имени переменной
         let nameCell = document.createElement("td");
-        nameCell.innerText = names[i];
+        nameCell.append(rowNameSpan);
         row.appendChild(nameCell);
 
-        for (let j = 0; j < idPrefixes.length; j++) {
+        for (let columnIndex = 0; columnIndex < headers.length - 1; columnIndex++) {
             let valueCell = document.createElement("td");
+
             let input = document.createElement("input");
-            input.id = `${idPrefixes[j]}_${i}`;
+            input.id = `${idPrefix}_${rowIndex}_${columnIndex}`;
             input.type = "number";
-            input.classList.add("value-input");
-            valueCell.appendChild(input);
+            input.value = 0;
+
+            let container = document.createElement("div")
+            container.style.display = "inline-flex";
+            container.style.justifyContent = "space-evenly"
+            container.style.width = "100%";
+            container.append(input);
+            container.append(varNamesFunc(rowIndex, columnIndex))
+
+            valueCell.append(container);
             row.appendChild(valueCell);
         }
 
-        // Добавляем строку в таблицу
         table.appendChild(row);
+
+        rowIndex++;
+        rowNameSpan = rowNamesFunc(rowIndex);
     }
 
-    // Возвращаем таблицу
-    return table;
-}
-
-
-
-function createControlBlock(formSubmitPath, map, funcNumber) {
-    // Создаем блок управления
-    let controlBlock = document.createElement("div");
-    controlBlock.classList.add("control-block"); // Добавляем класс для стилизации
-
-    // Создаем кнопку
-    let calculateButton = document.createElement("button");
-    calculateButton.innerText = "Расчитать";
-    calculateButton.classList.add("post-button");
-
-    calculateButton.onclick = function () {
-        calculateButton.disabled = true;
-        let values = collectValues(map, funcNumber);
-        console.log(values);
-        let data = JSON.stringify(Object.fromEntries(values));
-        console.log(data);
-
-        postData(formSubmitPath, data, function () {
-            calculateButton.disabled = false;
-        });
-    };
-
-    // Добавляем кнопку в блок управления
-    controlBlock.appendChild(calculateButton);
-
-    let saveButton = document.createElement("button");
-    saveButton.innerText = "Сохранить";
-    saveButton.classList.add("post-button");
-
-    saveButton.onclick = function () {
-        saveJSONToFile(map, funcNumber)
-    };
-    controlBlock.appendChild(saveButton);
-
-    // Добавляем кнопку в блок управления
-    controlBlock.appendChild(calculateButton);
-
-    let loadButton = document.createElement("button");
-    loadButton.innerText = "Загрузить";
-    loadButton.classList.add("post-button");
-
-    loadButton.onclick = function () {
-        loadJSONFromFile()
-    };
-    controlBlock.appendChild(loadButton);
-    return controlBlock; // Возвращаем блок с кнопкой
-}
-
-
-
-function postData(path, data, callback) {
-    fetch(new Request(path, {
-        method: "POST",
-        body: data,
-        headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-Type': 'application/json;charset=UTF-8'
-        },
-    })).then(response => {
-        if (response.status != 200) {
-            return
+    getData = function () {
+        let inputs = [...table.querySelectorAll('input[type="number"]')];
+        let data = new Array(0);
+        for (let i = 0; i < table.rows.length - 1; i++) {
+            data[i] = new Array(0)
         }
-        document.querySelectorAll('#imageGallery .plot').forEach((img, index) => {
-            console.log(img.src)
-            img.src += '?t=' + new Date().getTime();
-            console.log(img.src)
-        });
-    }).catch(function () {
-
-    }).finally(function () {
-        callback()
-    })
-}
-
-function fillInputsWithValues() {
-    inputs = collectInputs();
-    console.log(inputs.length)
-    for (let i = 0; i < inputs.length; i++) {
-        inputs[i].value = 0;
-    }
-}
-
-function collectInputs() {
-    return [...document.querySelectorAll('input[type="number"]')].sort();
-}
-
-function collectValues(shitMap, funcNumber) {
-    let inputs = collectInputs();
-    let funcs = new Array(funcNumber);
-    let qs = new Array(5);
-    for (let i = 0; i < funcNumber; i++) {
-        funcs[i] = new Array(4)
-    }
-    for (let i = 0; i < qs.length; i++) {
-        qs[i] = new Array(4)
-    }
-
-    var result = new Map()
-    for (let [key, value] of shitMap) {
-        console.log(key, ":", value)
-        result.set(value, new Array())
-    }
-
-    inputs.forEach(input => {
-        let splt = input.id.split('_');
-        let value = Number(input.value)
-        if (splt[0] == "f") {
-            funcs[Number(splt[1])][Number(splt[2])] = value
-            return
-        }
-        if (splt[0] == "q") {
-            console.log(splt)
-            qs[Number(splt[2])][Number(splt[1])] = value
-            return
+        for (let i = 0; i < inputs.length; i++) {
+            let splt = inputs[i].id.split("_");
+            idx = splt[1];
+            data[idx].push(Number(inputs[i].value));
         }
 
-        result.get(shitMap.get(splt[0])).push(value)
-    });
+        return data;
+    }
 
+    setData = function (data) {
+        let inputs = [...table.querySelectorAll('input[type="number"]')];
+        let inputMap = new Map();
+        for (let i = 0; i < inputs.length; i++) {
+            inputMap.set(inputs[i].id, inputs[i]);
+        }
 
-    result.set('coef', funcs)
-    result.set('q', qs)
+        let entries = Object.entries(data);
+        for (let i = 0; i < entries.length; i++) {
+            let entry = entries[i];
+            let key = entry[0];
+            let value = entry[1];
+            for (let j = 0; j < value.length; j++) {
+                for (let k = 0; k < value[j].length; k++) {
+                    let input = inputMap.get(`${key}_${j}_${k}`)
+                    if (!input) continue;
+
+                    input.value = value[j][k]
+                }
+            }
+        }
+    }
+
+    return {
+        block: table,
+        getData: getData,
+        setData: setData
+    }
+}
+
+function RowNameWithIndex(name, index) {
+    let result = document.createElement("span");
+    result.innerHTML = `${name}<sub>${index}</sub>`
+    return result
+}
+
+function PolynomicCellName(funcName, index, funcArg, power) {
+    if (power == 0){
+        return document.createElement("span");
+    } 
+    let result = NameWithIndex(funcName, index)
+    result.append(NameWithPower(funcArg, power))
+
     return result;
 }
 
-function saveJSONToFile(map, funcNumber) {
-    // Преобразуем объект в JSON строку
-    const jsonData = JSON.stringify(Object.fromEntries(collectValues(map, funcNumber)), null, 2);
+function NameWithIndex(name, index){
+    let result = document.createElement("span");
+    result.innerHTML = `${name}<sub>${index}</sub>`;
 
-    // Создаем Blob и ссылку для скачивания
-    const blob = new Blob([jsonData], { type: "text/plain" });
+    return result
+}
+
+function NameWithPower(name, power){
+    let result = document.createElement("span");
+
+    if (power > 0) {
+        result.innerHTML = `${name}`;
+    }
+
+    if (power > 1) {
+        result.innerHTML += `<sup>${power}</sup>`
+    }
+
+    return result
+}
+
+function saveJSONToFile(data) {
+    const blob = new Blob([data], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
 
-    // Создаем временную ссылку и инициируем скачивание
     const a = document.createElement("a");
     a.href = url;
-    a.download = "data.json"; // Название файла
+    a.download = "data.json";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -224,53 +139,50 @@ function saveJSONToFile(map, funcNumber) {
 }
 
 
-function loadFromJsonHelp(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+function loadJSONFromFile() {
+    return new Promise((resolve, reject) => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json';
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const jsonData = JSON.parse(e.target.result);
-
-        let inputs = collectInputs();
-
-        inputs.forEach(input => {
-            let splt = input.id.split('_');
-            switch (splt[0]) {
-                case "f": // как же надоело пытаться делать гибко в JS 
-                    input.value = jsonData.coef[Number(splt[1])][Number(splt[2])]
-                    break
-                case "var":
-                    input.value = jsonData.start[Number(splt[1])]
-                    break
-                case "limit":
-                    input.value = jsonData.max_values[Number(splt[1])]
-                    break
-                case "k":
-                    input.value = jsonData.k[Number(splt[1])]
-                    break
-                case "b":
-                    input.value = jsonData.b[Number(splt[1])]
-                    break
-                case "q":
-                    input.value = jsonData.q[Number(splt[2])][Number(splt[1])]
-                    break
+        input.onchange = (event) => {
+            const file = event.target.files[0];
+            if (!file) {
+                reject(new Error('No file selected'));
+                return;
             }
-        });
 
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    resolve(reader.result);
+                } catch (error) {
+                    reject(new Error('Invalid JSON file'));
+                }
+            };
+            reader.onerror = () => reject(new Error('File reading error'));
+            reader.readAsText(file);
+        };
 
-        event.target.remove();
-    };
-
-    reader.readAsText(file);
+        input.click();
+    });
 }
 
-function loadJSONFromFile() {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.json';
-    fileInput.onchange = loadFromJsonHelp;
-    fileInput.style.width = 0;
-    document.body.appendChild(fileInput);
-    fileInput.click();
-};
+function postData(route, body, succsessCallback, errorCallback, callback) {
+    fetch(new Request(route, {
+        method: "POST",
+        body: body,
+        headers: {
+            'Accept': 'application/json, text/plain',
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+    })).then(response => {
+        if (response.status != 200) {
+        }
+        succsessCallback()
+    }).catch(function () {
+        errorCallback()
+    }).finally(function () {
+        callback()
+    })
+}
