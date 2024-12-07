@@ -1,6 +1,6 @@
 /* Основные стили для body */
 body {
-    font-size: 24px;
+    font-size: 18px;
     font-family: 'Roboto', sans-serif;
     /* Устанавливаем шрифт */
     background-color: #f4f4f4;
@@ -147,7 +147,7 @@ input[type="number"] {
     /* Ширина поля ввода */
     padding: 4px;
     /* Внутренние отступы для удобства */
-    font-size: 24px;
+    font-size: 18px;
     /* Размер шрифта */
 }
 
@@ -186,6 +186,11 @@ button {
     /* Курсор при наведении */
     transition: background-color 0.3s;
     /* Анимация при наведении */
+}
+
+button[disabled] {
+    pointer-events: none;
+    opacity: 0.6; /* Optional: Make it look disabled */
 }
 
 button:hover {
