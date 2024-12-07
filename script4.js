@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", function () {
         postDataButton.disabled = true
         let body = convertDataToJson(recoveryBlock, failureBlock)
         localStorage.setItem("jsonData4", body)
-        postData("http://194.147.1149.181:9090/calcAndDraw_pc", body,
+        postData("http://194.147.149.181:9090/calcAndDraw_pc", body,
             () => {
                 document.querySelectorAll('#imageGallery .plot').forEach(img => {
                     img.src += '?t=' + new Date().getTime();
