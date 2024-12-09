@@ -42,9 +42,7 @@ class CalculationDrawServicePC:
             # Нормализация результатов, чтобы они были в пределах [0, 1]
             for normalize_row in range(len(Y)):
                 for normalize_column in range(len(Y[normalize_row])):
-                    if Y[normalize_row][normalize_column] > 1.0:
-                        Y[normalize_row][normalize_column] = 1.0
-                    elif Y[normalize_row][normalize_column] < 0.0:
+                    if Y[normalize_row][normalize_column] < 0.0:
                         Y[normalize_row][normalize_column] = 0.0
         return Y, X
 
@@ -92,7 +90,7 @@ class CalculationDrawServicePC:
             ax1.plot(time_intervals, L, label=label)
 
         # Настройка графика
-        ax1.set_xlabel('Время')
+        ax1.set_xlabel('Время, часы')
         ax1.set_ylabel('Значения')
         ax1.set_title('Вероятностного нахождения системы в состоянии')
         ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
@@ -123,7 +121,7 @@ class CalculationDrawServicePC:
             ax2.plot(zoomed_intervals, L, label=label)
 
         # Настройка увеличенного графика
-        ax2.set_xlabel('Время (увеличенный масштаб)')
+        ax2.set_xlabel('Время (увеличенный масштаб), часы')
         ax2.set_ylabel('Значения')
         ax2.set_title('Вероятностного нахождения системы в состоянии (увеличенный масштаб)')
         ax2.set_ylim(0, 0.5)
