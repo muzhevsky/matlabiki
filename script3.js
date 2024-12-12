@@ -90,7 +90,7 @@ function createVarBlock() {
         return " ";
     }
 
-    return NewBlock(["Название переменной", "Значение", "Лимит"], "var", rowNameFunc, cellNameFunc)
+    return NewBlock(["Название переменной", "Начальное значение", "Лимит"], "var", rowNameFunc, cellNameFunc)
 }
 
 function createFuncBlock() {
