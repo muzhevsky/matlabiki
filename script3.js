@@ -50,9 +50,9 @@ window.addEventListener("DOMContentLoaded", function () {
     }
 
     fillRandomButton.onclick = () => {
-        varBlock.fillRandom()
-        funcBlock.fillRandom()
-        qFuncBlock.fillRandom()
+        varBlock.fillRandom(0.85)
+        funcBlock.fillRandom(0.85)
+        qFuncBlock.fillRandom(0.85)
     }
 });
 

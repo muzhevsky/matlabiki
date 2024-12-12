@@ -83,13 +83,12 @@ function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
         }
     }
 
-    fillRandom = function () {
+    fillRandom = function (chance) {
         for (let i = 0; i < rows.length; i++){
             let inputs = [...rows[i].querySelectorAll('input[type="number"]')];
-            let chance = 0.5
             let filled = false;
             for (let j = 0; j < inputs.length; j++){
-                if (Math.random() > chance){
+                if (Math.random() < chance){
                     inputs[j].value = randn_bm()
                     filled = true;
                 } else {
