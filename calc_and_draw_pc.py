@@ -131,8 +131,9 @@ class CalculationDrawServicePC:
         # Сохранение второго графика в буфер
         plt.savefig("images/" + "petal_plot_pc_zoom.png")
 
+        plt.clf()  # Очистка текущей фигуры
+
         return {
             "image1": None,  # Полный график
             "image2": None  # Увеличенный график
         }
-        plt.clf()  # Очистка текущей фигуры
