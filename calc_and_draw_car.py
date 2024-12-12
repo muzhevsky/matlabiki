@@ -44,9 +44,7 @@ class CalculationDrawServiceCar:
             # Нормализация результатов, чтобы они были в пределах [0, 1]
             for normalize_row in range(len(Y)):
                 for normalize_column in range(len(Y[normalize_row])):
-                    if Y[normalize_row][normalize_column] > 1.0:
-                        Y[normalize_row][normalize_column] = 1.0
-                    elif Y[normalize_row][normalize_column] < 0.0:
+                    if Y[normalize_row][normalize_column] < 0.0:
                         Y[normalize_row][normalize_column] = 0.0
         return Y, X
 
@@ -87,7 +85,7 @@ class CalculationDrawServiceCar:
         # Добавляем легенду
 
         plt.rcParams["figure.figsize"] = (15, 8)
-        plt.xlabel("Время")  # Подпись оси X
+        plt.xlabel("Время, часы")  # Подпись оси X
         plt.ylabel("Значение")  # Подпись оси Y
         for i in range(0, 12):
             plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'])
