@@ -1,7 +1,7 @@
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-
+from matplotlib import cm
 import numpy as np
 from scipy.integrate import odeint
 from constants import Constants
@@ -91,8 +91,9 @@ class CalculationDrawService:
         plt.rcParams["figure.figsize"] = (15, 8)
         plt.xlabel("Время, часы")  # Подпись оси X
         plt.ylabel("Значение")  # Подпись оси Y
+        colors = cm.viridis(np.linspace(0, 1, 14))
         for i in range(0, 14):
-            plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'])
+            plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'], color=colors[i])
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)  # Отображение легенды
         plt.tight_layout()
         plt.savefig("images/" + save_path)  # Сохранение графика как изображение
