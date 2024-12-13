@@ -29,9 +29,7 @@ function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
             input.value = 0;
 
             let container = document.createElement("div")
-            container.style.display = "inline-flex";
-            container.style.justifyContent = "space-evenly"
-            container.style.width = "100%";
+            container.classList.add("cell")
             container.append(input);
             container.append(varNamesFunc(rowIndex, columnIndex))
 
@@ -113,8 +111,18 @@ function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
 }
 
 function RowNameWithIndex(name, index) {
-    let result = document.createElement("span");
-    result.innerHTML = `${name}<sub>${index}</sub>`
+    let result = document.createElement("div");
+    result.classList.add("cell")
+
+    let funcNameSpan = document.createElement("span");
+    funcNameSpan.innerHTML = `${name}<sub>${index}</sub>`
+
+    let equalitySpan = document.createElement("span");
+    equalitySpan.innerHTML = " ="
+
+    result.append(funcNameSpan)
+    result.append(equalitySpan)
+
     return result
 }
 
@@ -126,6 +134,10 @@ function PolynomicCellName(funcName, index, funcArg, power, def) {
     }
     result.append(NameWithIndex(funcName, index))
     result.append(NameWithPower(funcArg, power))
+
+    let plusSpan = document.createElement("span")
+    plusSpan.innerText = " +"
+    result.append(plusSpan)
 
     return result;
 }
