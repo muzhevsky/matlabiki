@@ -68,7 +68,7 @@ function createRecoveryBlock() {
         return " ";
     }
 
-    return NewBlock(["Интенсивность потока восстановления", ""], "recovery", rowNameFunc, cellNameFunc)
+    return NewBlock(["Интенсивности потоков восстановления", ""], "recovery", rowNameFunc, cellNameFunc)
 }
 
 function createFailureBlock() {
@@ -94,7 +94,7 @@ function createFailureBlock() {
         return " ";
     }
 
-    return NewBlock(["Интенсивность потока отказа", ""], "failure", rowNameFunc, cellNameFunc)
+    return NewBlock(["Интенсивности потоков отказа", ""], "failure", rowNameFunc, cellNameFunc)
 }
 
 function convertDataToJson(recoveryBlock, failureBlock) {

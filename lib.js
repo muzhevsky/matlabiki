@@ -84,20 +84,20 @@ function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
     }
 
     fillRandom = function (chance) {
-        for (let i = 0; i < rows.length; i++){
+        for (let i = 0; i < rows.length; i++) {
             let inputs = [...rows[i].querySelectorAll('input[type="number"]')];
             let filled = false;
-            for (let j = 0; j < inputs.length; j++){
-                if (Math.random() < chance){
-                    inputs[j].value = randn_bm()
+            for (let j = 0; j < inputs.length; j++) {
+                if (Math.random() < chance) {
+                    inputs[j].value = randn_bm().toFixed(2)
                     filled = true;
                 } else {
                     inputs[j].value = 0;
                 }
             }
 
-            if (!filled){
-                let randInput = Math.ceil(Math.random()*(inputs.length - 1))
+            if (!filled) {
+                let randInput = Math.ceil(Math.random() * (inputs.length - 1))
                 console.log(randInput)
                 inputs[randInput].value = randn_bm()
             }
@@ -119,7 +119,7 @@ function RowNameWithIndex(name, index) {
 }
 
 function PolynomicCellName(funcName, index, funcArg, power, def) {
-    let result = document.createElement("span") 
+    let result = document.createElement("span")
     if (power == 0) {
         result.innerHTML = def ? def : ""
         return result;
@@ -130,19 +130,19 @@ function PolynomicCellName(funcName, index, funcArg, power, def) {
     return result;
 }
 
-function NameWithIndex(name, index){
+function NameWithIndex(name, index) {
     let result = document.createElement("span");
     result.innerHTML = `${name}<sub>${index}</sub>`;
 
     return result
 }
 
-function NameWithPower(name, power){
+function NameWithPower(name, power) {
     let result = document.createElement("span");
 
     if (power > 0) {
         result.innerHTML = `${name}`;
-    } 
+    }
 
     if (power > 1) {
         result.innerHTML += `<sup>${power}</sup>`
@@ -215,9 +215,9 @@ function postData(route, body, succsessCallback, errorCallback, callback) {
 
 function randn_bm() {
     let u = 0, v = 0;
-    while(u === 0) u = Math.random(); 
-    while(v === 0) v = Math.random();
-    let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    while (u === 0) u = Math.random();
+    while (v === 0) v = Math.random();
+    let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
     num = num / 10.0 + 0.5;
     if (num > 1 || num < 0) return randn_bm()
     return num
