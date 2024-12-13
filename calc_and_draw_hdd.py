@@ -173,7 +173,7 @@ class CalculationDrawServiceHdd:
         plt.ylabel("Значения параметров модели")  # Подпись оси Y
         colors = cm.tab20(np.linspace(0, 1, 13))
         for i in range(0, 13):
-            plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'], color=colors[i])
+            plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_name'], color=colors[i])
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)  # Отображение легенды
         plt.tight_layout()
         plt.savefig("images/" + save_path)  # Сохранение графика как изображение
