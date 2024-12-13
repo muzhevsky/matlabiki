@@ -98,7 +98,7 @@ function createFuncBlock() {
         if (i >= flArray.length) {
             return "";
         }
-        return RowNameWithIndex("F", i + 1)
+        return RowNameWithIndex("f", i + 1)
     }
 
     cellNameFunc = function (i, j) {
