@@ -60,7 +60,7 @@ class CalculationDrawServiceHdd:
 
         # Вычисление производных на основе текущего состояния и заданных функций
 
-        dL1_dx = 1 / 5 * (
+        dL1_dx = 1 / 15 * (
                 self.functions[0].calc(L1_t) * self.functions[1].calc(L2_t) * self.functions[2].calc(L3_t) *
                 self.functions[3].calc(L4_t) * self.functions[4].calc(L5_t) * self.functions[5].calc(L6_t) *
                 self.functions[6].calc(L7_t) * self.functions[7].calc(L8_t) * self.functions[8].calc(L9_t) *
@@ -68,7 +68,7 @@ class CalculationDrawServiceHdd:
                 self.functions[12].calc(L13_t) * self.functions[13].calc(L14_t) * (e1 + e2 + e3) - e4 - e5
         )
 
-        dL2_dx = 1 / 5 * (
+        dL2_dx = 1 / 15 * (
                 self.functions[14].calc(L1_t) * self.functions[15].calc(L2_t) * self.functions[16].calc(L3_t) *
                 self.functions[17].calc(L4_t) * self.functions[18].calc(L5_t) * self.functions[19].calc(L6_t) *
                 self.functions[20].calc(L7_t) * self.functions[21].calc(L8_t) * self.functions[22].calc(L9_t) *
@@ -76,7 +76,7 @@ class CalculationDrawServiceHdd:
                 self.functions[26].calc(L13_t) * self.functions[27].calc(L14_t) * (e1 + e2 + e3 + e4) - e5
         )
 
-        dL3_dx = 1 / 5 * (
+        dL3_dx = 1 / 15 * (
                 self.functions[28].calc(L1_t) * self.functions[29].calc(L2_t) * self.functions[30].calc(L3_t) *
                 self.functions[31].calc(L4_t) * self.functions[32].calc(L5_t) * self.functions[33].calc(L6_t) *
                 self.functions[34].calc(L7_t) * self.functions[35].calc(L8_t) * self.functions[36].calc(L9_t) *
@@ -84,7 +84,7 @@ class CalculationDrawServiceHdd:
                 self.functions[40].calc(L13_t) * self.functions[41].calc(L14_t) * (e1 + e2 + e3 + e4) - e5
         )
 
-        dL4_dx = 1 / 5 * (
+        dL4_dx = 1 / 15 * (
                 self.functions[42].calc(L1_t) * self.functions[43].calc(L2_t) * self.functions[44].calc(L3_t) *
                 self.functions[45].calc(L4_t) *
                 self.functions[48].calc(L7_t) * self.functions[49].calc(L8_t) * self.functions[50].calc(L9_t) *
@@ -92,12 +92,12 @@ class CalculationDrawServiceHdd:
                 self.functions[54].calc(L13_t) * self.functions[55].calc(L14_t) * e5 - (
                         e1 + e2 + e3 + e4 + self.functions[46].calc(L7_t) * self.functions[47].calc(L8_t)))
 
-        dL5_dx = 1 / 5 * (
+        dL5_dx = 1 / 15 * (
                 self.functions[56].calc(L4_t) * self.functions[57].calc(L6_t) * self.functions[58].calc(L9_t) *
                 self.functions[59].calc(L10_t) * self.functions[60].calc(L13_t) * (e1 + e2 + e4 + e5) - e5
         )
 
-        dL6_dx = 1 / 5 * (
+        dL6_dx = 1 / 15 * (
                 self.functions[61].calc(L1_t) * self.functions[62].calc(L2_t) * self.functions[63].calc(L3_t) *
                 self.functions[64].calc(L4_t) * self.functions[65].calc(L5_t) * self.functions[66].calc(L6_t) *
                 self.functions[67].calc(L7_t) * self.functions[68].calc(L8_t) * self.functions[69].calc(L9_t) *
@@ -105,17 +105,17 @@ class CalculationDrawServiceHdd:
                 self.functions[73].calc(L13_t) * self.functions[74].calc(L14_t) * (e1 + e2) - e5
         )
 
-        dL7_dx = 1 / 5 * (
+        dL7_dx = 1 / 15 * (
                 self.functions[46].calc(L2_t) * self.functions[47].calc(L4_t) * self.functions[150].calc(L14_t) - e5
         )
 
-        dL8_dx = 1 / 5 * (
+        dL8_dx = 1 / 15 * (
                 self.functions[75].calc(L1_t) * self.functions[76].calc(L2_t) * self.functions[77].calc(L3_t) *
                 self.functions[78].calc(L4_t) * self.functions[79].calc(L6_t) * self.functions[80].calc(L9_t) *
                 self.functions[81].calc(L10_t) * (e1 + e2 + e3) - e1 - e2
         )
 
-        dL9_dx = 1 / 5 * (
+        dL9_dx = 1 / 15 * (
                 self.functions[82].calc(L1_t) * self.functions[83].calc(L2_t) * self.functions[84].calc(L3_t) *
                 self.functions[85].calc(L4_t) * self.functions[86].calc(L5_t) * self.functions[87].calc(L6_t) *
                 self.functions[88].calc(L7_t) * self.functions[89].calc(L10_t) * self.functions[90].calc(L11_t) *
@@ -123,7 +123,7 @@ class CalculationDrawServiceHdd:
                 (e4 + e5) - e1 - e2 - e3
         )
 
-        dL10_dx = 1 / 5 * (
+        dL10_dx = 1 / 15 * (
                 self.functions[94].calc(L1_t) * self.functions[95].calc(L2_t) * self.functions[96].calc(L3_t) *
                 self.functions[97].calc(L4_t) * self.functions[98].calc(L5_t) * self.functions[99].calc(L6_t) *
                 self.functions[100].calc(L7_t) * self.functions[101].calc(L8_t) * self.functions[102].calc(L9_t) *
@@ -131,14 +131,14 @@ class CalculationDrawServiceHdd:
                 (e1 + e2) - self.functions[106].calc(L13_t) * self.functions[107].calc(L14_t) * e3
         )
 
-        dL11_dx = 1 / 5 * (
+        dL11_dx = 1 / 15 * (
                 self.functions[108].calc(L1_t) * self.functions[109].calc(L2_t) * self.functions[110].calc(L3_t) *
                 self.functions[111].calc(L4_t) * self.functions[112].calc(L8_t) * self.functions[113].calc(L10_t) *
                 self.functions[114].calc(L12_t) * self.functions[115].calc(L13_t) * self.functions[116].calc(L14_t) -
                 self.functions[117].calc(L5_t) * self.functions[118].calc(L6_t) * (e1 + e2 + e3 + e4 + e5)
         )
 
-        dL12_dx = 1 / 5 * (
+        dL12_dx = 1 / 15 * (
                 self.functions[119].calc(L1_t) * self.functions[120].calc(L2_t) * self.functions[121].calc(L3_t) *
                 self.functions[122].calc(L4_t) * self.functions[123].calc(L5_t) * self.functions[124].calc(L6_t) *
                 self.functions[125].calc(L7_t) * self.functions[126].calc(L8_t) * self.functions[127].calc(L9_t) *
@@ -146,7 +146,7 @@ class CalculationDrawServiceHdd:
                 self.functions[131].calc(L14_t) * (e1 + e4 + e5) - e3
         )
 
-        dL13_dx = 1 / 5 * (
+        dL13_dx = 1 / 15 * (
                 self.functions[132].calc(L1_t) * self.functions[133].calc(L2_t) * self.functions[134].calc(L3_t) *
                 self.functions[135].calc(L4_t) * self.functions[136].calc(L5_t) * self.functions[137].calc(L6_t) *
                 self.functions[138].calc(L7_t) * self.functions[139].calc(L8_t) * self.functions[140].calc(L10_t) *
@@ -154,7 +154,7 @@ class CalculationDrawServiceHdd:
                 self.functions[144].calc(L14_t) - self.functions[145].calc(L9_t) * (e1 + e2 + e3 + e4 + e5)
         )
 
-        dL14_dx = 1 / 5 * (
+        dL14_dx = 1 / 15 * (
                 self.functions[146].calc(L5_t) * self.functions[147].calc(L7_t) * self.functions[148].calc(L11_t) *
                 self.functions[149].calc(L13_t) - (e1 + e2 + e3 + e4 + e5)
         )
