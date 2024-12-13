@@ -77,7 +77,7 @@ function NewBlock(headers, idPrefix, rowNamesFunc, varNamesFunc) {
                     let input = inputMap.get(`${key}_${j}_${k}`)
                     if (!input) continue;
 
-                    input.value = value[j][k]
+                    input.value = value[j][k].toFixed(2)
                 }
             }
         }
