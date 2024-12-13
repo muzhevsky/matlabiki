@@ -91,7 +91,7 @@ class CalculationDrawServicePC:
 
         # Настройка графика
         ax1.set_xlabel('Время, часы')
-        ax1.set_ylabel('Значения')
+        ax1.set_ylabel('Вероятность')
         ax1.set_title('Вероятностного нахождения системы в состоянии')
         ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
         plt.tight_layout()
@@ -122,7 +122,7 @@ class CalculationDrawServicePC:
 
         # Настройка увеличенного графика
         ax2.set_xlabel('Время (увеличенный масштаб), часы')
-        ax2.set_ylabel('Значения')
+        ax2.set_ylabel('Вероятность')
         ax2.set_title('Вероятностного нахождения системы в состоянии (увеличенный масштаб)')
         ax2.set_ylim(0, 0.5)
         ax2.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)

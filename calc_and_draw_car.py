@@ -86,8 +86,8 @@ class CalculationDrawServiceCar:
         # Добавляем легенду
 
         plt.rcParams["figure.figsize"] = (15, 8)
-        plt.xlabel("Время, часы")  # Подпись оси X
-        plt.ylabel("Значение")  # Подпись оси Y
+        plt.xlabel("Время")  # Подпись оси X
+        plt.ylabel("Значения параметров модели")  # Подпись оси Y
         colors = cm.tab20(np.linspace(0, 1, 12))
         for i in range(0, 12):
             plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'], color=colors[i])
