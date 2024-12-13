@@ -106,7 +106,7 @@ function createFuncBlock() {
         if (i >= flArray.length) {
             return "";
         }
-        return PolynomicCellName("L", flArray[i], "(t)", power - j)
+        return PolynomicCellName("X", flArray[i], "(t)", power - j)
     }
 
     return NewBlock(["Функции", "", "", "", ""], "x", rowNameFunc, cellNameFunc)
