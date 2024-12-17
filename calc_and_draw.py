@@ -93,9 +93,16 @@ class CalculationDrawService:
         plt.ylabel("Значения параметров модели")  # Подпись оси Y
         colors = cm.tab20(np.linspace(0, 1, 14))
         for i in range(0, 14):
-            plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'], color=colors[i])
+            line = plt.plot(X, Y[:, i], label=Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'], color=colors[i])
+            # Получаем координаты из объекта линии
+            line_x = line[0].get_xdata()
+            line_y = line[0].get_ydata()
+
+            # Добавляем аннотацию на середину линии
+            plt.annotate(Constants.VARIABLES_DESCRIPTION[str(i + 1)]['variable_title'].split()[0], xy=(line_x[-1], line_y[-1]), xytext=(line_x[-1], line_y[-1]),
+                         arrowprops=dict(arrowstyle="->", color=colors[i]), fontsize=10, color="black")
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)  # Отображение легенды
-        plt.tight_layout()
+        plt.tight_layout(pad=0.1, w_pad=2)
         plt.savefig("images/" + save_path)  # Сохранение графика как изображение
         plt.clf()  # Очистка текущей фигуры
 
