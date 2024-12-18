@@ -142,9 +142,9 @@ function PolynomicCellName(funcName, index, funcArg, power, def) {
     return result;
 }
 
-function NameWithIndex(name, index) {
+function NameWithIndex(name, index, postfix) {
     let result = document.createElement("span");
-    result.innerHTML = `${name}<sub>${index}</sub>`;
+    result.innerHTML = `${name}<sub>${index}</sub><span>${postfix ? postfix : ""}</span>`;
 
     return result
 }

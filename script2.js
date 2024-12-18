@@ -16,6 +16,8 @@ window.addEventListener("DOMContentLoaded", function () {
         eFuncBlock.setData(data)
     }
 
+    eFuncBlock.block.style.width = "30%";
+
     container.append(varBlock.block, funcBlock.block, eFuncBlock.block)
 
     saveToJsonButton.onclick = () => {
@@ -127,7 +129,13 @@ function createEFuncBlock() {
             return ""
         }
 
-        return varNames[i];
+        let sp = document.createElement("sub");
+        sp.innerHTML = i;
+        let result = document.createElement("span");
+        result.innerHTML = "E";
+        result.append(sp);
+        result.innerHTML += "(t)";
+        return RowNameWithIndex(result.innerHTML, "");
     }
 
     let cellNameFunc = function (i, j) {
@@ -135,11 +143,10 @@ function createEFuncBlock() {
             return "";
         }
 
-        if (j == 0) { return NameWithIndex("k", i + 1) }
+        if (j == 0) { return NameWithIndex("k", i + 1, " +") }
         if (j == 1) { return NameWithIndex("b", i + 1) }
     }
-
-    return NewBlock(["Функция", "", ""], "efunc", rowNameFunc, cellNameFunc)
+    return NewBlock(["Функция", `k<sub>i</sub>`, `b<sub>i</sub>`], "efunc", rowNameFunc, cellNameFunc)
 }
 
 // todo можно вынести в либу и переиспользовать, но так лень пипец
