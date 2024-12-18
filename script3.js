@@ -130,26 +130,18 @@ function createFuncBlock() {
 
 
 function createQFuncBlock() {
-    let varNames = [
-        "ζ_i – увеличение количества источников новых данных, предназначенных для интеграции с данными хранилища",
-        "ζ_i - частота изменения периодов сдачи финансовой отчетности предприятия",
-        "ζ_i - сокращение квалифицированной поддержки вендора, вызванное ужесточением режима санкций",
-        "ζ_i - рост интенсивности перехода на Open Source решения при развитии хранилища данных",
-        "ζ_i - увеличение количества новых стандартов при реализации Open Source решений",
-    ]
+    let SIGMA_count = 5;
 
     let rowNameFunc = function (i) {
-        if (i >= varNames.length) {
+        if (i >= SIGMA_count) {
             return ""
         }
 
-        let sp = document.createElement("span")
-        sp.innerHTML = varNames[i].replace("_i", `<sub>${i + 1}</sub>`)
-        return sp;
+        return RowNameWithIndex("ζ", `${i + 1}`);
     }
 
     let cellNameFunc = function (i, j) {
-        if (i >= varNames.length) {
+        if (i >= SIGMA_count) {
             return "";
         }
 
